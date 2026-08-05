@@ -59,3 +59,48 @@ class CharacterSpan:
             )
 
         return text[self.start:self.end]
+
+
+def parse_bio_label(label: str) -> tuple[str, str | None]:
+    """Parse and validate one BIO label.
+
+    Returns:
+        A two-item tuple containing the BIO prefix and entity type.
+        The entity type is ``None`` when the label is ``"O"``.
+
+    Examples:
+        ``"O"`` becomes ``("O", None)``.
+        ``"B-PERSON"`` becomes ``("B", "PERSON")``.
+        ``"I-EMAIL"`` becomes ``("I", "EMAIL")``.
+    """
+
+    if not isinstance(label, str):
+        raise TypeError("BIO label must be a string")
+
+    if label == "O":
+        return "O", None
+
+    if label != label.strip():
+        raise ValueError(
+            "BIO label must not contain surrounding whitespace"
+        )
+
+    if "-" not in label:
+        raise ValueError(
+            "BIO label must be 'O', 'B-<TYPE>', or 'I-<TYPE>'"
+        )
+
+    prefix, entity_type = label.split("-", maxsplit=1)
+
+    if prefix not in {"B", "I"}:
+        raise ValueError("BIO prefix must be 'B', 'I', or 'O'")
+
+    if not entity_type:
+        raise ValueError("BIO entity type must not be empty")
+
+    if entity_type != entity_type.strip():
+        raise ValueError(
+            "BIO entity type must not contain surrounding whitespace"
+        )
+
+    return prefix, entity_type

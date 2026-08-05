@@ -1,0 +1,25 @@
+# Virtual environment
+.venv/
+
+# Python-generated files
+__pycache__/
+*.py[cod]
+
+# Test cache
+.pytest_cache/
+
+# Build output
+build/
+dist/
+*.egg-info/
+
+# Local environment variables
+.env
+
+# Editor files
+.vscode/
+.idea/
+
+# Operating-system files
+.DS_Store
+Thumbs.db

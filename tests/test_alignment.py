@@ -1,6 +1,6 @@
 import pytest
 
-from pii_scrub.data.alignment import CharacterSpan
+from pii_scrub.data.alignment import CharacterSpan, parse_bio_label
 
 
 def test_half_open_character_span_extracts_exact_entity() -> None:
@@ -91,3 +91,74 @@ def test_character_span_rejects_end_beyond_text() -> None:
         match="span end 19 exceeds text length 12",
     ):
         span.extract(text)
+
+
+def test_parse_bio_label_parses_outside_label() -> None:
+    """The outside label should not contain an entity type."""
+
+    prefix, entity_type = parse_bio_label("O")
+
+    assert prefix == "O"
+    assert entity_type is None
+
+
+@pytest.mark.parametrize(
+    ("label", "expected_prefix", "expected_entity_type"),
+    [
+        ("B-PERSON", "B", "PERSON"),
+        ("I-EMAIL", "I", "EMAIL"),
+        ("B-PHONE_NUMBER", "B", "PHONE_NUMBER"),
+        ("I-ID-NUMBER", "I", "ID-NUMBER"),
+    ],
+)
+def test_parse_bio_label_parses_entity_labels(
+    label: str,
+    expected_prefix: str,
+    expected_entity_type: str,
+) -> None:
+    """Valid B and I labels should be split into prefix and entity type."""
+
+    prefix, entity_type = parse_bio_label(label)
+
+    assert prefix == expected_prefix
+    assert entity_type == expected_entity_type
+
+
+@pytest.mark.parametrize(
+    "label",
+    [
+        "",
+        "PERSON",
+        "X-PERSON",
+        "O-PERSON",
+        "B-",
+        "I-",
+        " B-PERSON",
+        "B-PERSON ",
+        "B- PERSON",
+    ],
+)
+def test_parse_bio_label_rejects_malformed_labels(
+    label: str,
+) -> None:
+    """Malformed BIO labels must fail instead of being interpreted silently."""
+
+    with pytest.raises(ValueError):
+        parse_bio_label(label)
+
+
+@pytest.mark.parametrize(
+    "label",
+    [
+        None,
+        12,
+        True,
+    ],
+)
+def test_parse_bio_label_rejects_non_string_values(
+    label: object,
+) -> None:
+    """BIO labels must be strings."""
+
+    with pytest.raises(TypeError):
+        parse_bio_label(label)  # type: ignore[arg-type]
