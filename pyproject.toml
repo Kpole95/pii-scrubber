@@ -1,19 +1,24 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "pii-scrubber"
 version = "0.1.0"
-description = "Add your description here"
+description = "Local PII detection and redaction backed by span-level evaluation."
 readme = "README.md"
-authors = [
-    { name = "Murali Krishna Pole", email = "krishnapole90@gmail.com" }
-]
 requires-python = ">=3.11"
 dependencies = []
 
-[build-system]
-requires = ["uv_build>=0.11.32,<0.12.0"]
-build-backend = "uv_build"
-
 [dependency-groups]
 dev = [
-    "pytest>=9.1.1",
+    "pytest>=9.0",
 ]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
+addopts = "-ra"
