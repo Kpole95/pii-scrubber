@@ -24,3 +24,32 @@ text -> word BIO -> subwords -> aligned BIO -> character spans
 ## Persistence
 
 Deterministic splits are saved as `train.jsonl`, `validation.jsonl`, `test.jsonl`, and `manifest.json`. Loading validates artifact version and every split count.
+
+## Canonical benchmark datasets
+
+Stage 4 adds two canonical dataset adapters:
+
+- `research/data/ai4privacy.py` converts `ai4privacy/pii-masking-200k`
+  records into normalized `DatasetExample` objects using original
+  character-offset annotations.
+- `research/data/conll.py` converts CoNLL-2003 token/tag rows into
+  deterministic text with PERSON-only character spans.
+
+Ai4Privacy's pre-generated token/BIO labels are deliberately ignored.
+The project uses the original character spans and passes them through
+`pii_scrub.text.alignment`, so tokenization and subword alignment remain
+under our control.
+
+CoNLL-2003 is used only as a PERSON out-of-distribution benchmark.
+ORG, LOC, and MISC annotations are not remapped into unrelated PII
+categories.
+
+The data flow is:
+
+```text
+raw dataset row
+    -> dataset adapter
+    -> DatasetExample
+    -> CharacterSpan
+    -> Stage 3 BIO/subword alignment
+    -> future training or evaluation
