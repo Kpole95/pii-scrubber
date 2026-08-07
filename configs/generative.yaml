@@ -1,0 +1,8 @@
+model_name: Qwen/Qwen2.5-1.5B-Instruct
+seed: 42
+max_length: 1024
+output_format: json_spans
+lora:
+  rank: 16
+  alpha: 32
+  dropout: 0.05

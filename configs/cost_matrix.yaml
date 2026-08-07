@@ -1,0 +1,10 @@
+# Initial study assumption; justify or revise before publishing results.
+default:
+  false_negative: 20
+  false_positive: 1
+PERSON:
+  false_negative: 30
+  false_positive: 1
+ID_NUMBER:
+  false_negative: 30
+  false_positive: 1

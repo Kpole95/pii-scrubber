@@ -1,25 +1,19 @@
-# Virtual environment
 .venv/
-
-# Python-generated files
 __pycache__/
 *.py[cod]
-
-# Test cache
+*.egg-info/
 .pytest_cache/
-
-# Build output
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
 build/
 dist/
-*.egg-info/
-
-# Local environment variables
 .env
-
-# Editor files
+.env.*
 .vscode/
 .idea/
-
-# Operating-system files
 .DS_Store
 Thumbs.db
+research/results/*
+!research/results/README.md
