@@ -1,0 +1,200 @@
+{"id":"001","text":"Email Sarah at sarah@example.com","spans":[{"start":6,"end":11,"label":"PERSON"},{"start":15,"end":32,"label":"EMAIL"}]}
+{"id":"002","text":"Call John on 02079460958","spans":[{"start":5,"end":9,"label":"PERSON"},{"start":13,"end":24,"label":"PHONE"}]}
+{"id":"003","text":"Nothing private is written here.","spans":[]}
+{"id":"004","text":"Send the report to anna@example.org","spans":[{"start":19,"end":35,"label":"EMAIL"}]}
+{"id":"005","text":"My name is David Brown","spans":[{"start":11,"end":22,"label":"PERSON"}]}
+{"id":"006","text":"Contact candidate Sarah Lin at s.lin99@fastmail.io or call +1-555-0182.","spans":[{"start":18,"end":27,"label":"PERSON"},{"start":31,"end":50,"label":"EMAIL"},{"start":59,"end":70,"label":"PHONE"}]}
+{"id":"007","text":"Deliver the package directly to 742 Evergreen Ter, Apt 3B.","spans":[{"start":32,"end":57,"label":"ADDRESS"}]}
+{"id":"008","text":"Payment declined for card ending in 4111111111111111, please update payment method.","spans":[{"start":36,"end":52,"label":"CREDIT_CARD"}]}
+{"id":"009","text":"Login using user handle @dev_ninja_42 with temporary pass: Tr0wb0m@2026!","spans":[{"start":24,"end":37,"label":"USERNAME"},{"start":59,"end":72,"label":"PASSWORD"}]}
+{"id":"010","text":"Order #98124 for $45.99 from Acme Corp was shipped on 2026-05-12.","spans":[]}
+{"id":"011","text":"Alert: Unauthorized access attempt from source IP 192.168.1.105 recorded.","spans":[{"start":50,"end":63,"label":"IP_ADDRESS"}]}
+{"id":"012","text":"Wire funds to IBAN GB82WEST12345698765432 using SWIFT code WESTGB2L.","spans":[{"start":19,"end":41,"label":"BANK_ACCOUNT"},{"start":59,"end":67,"label":"SWIFT_CODE"}]}
+{"id":"013","text":"SSN on file: 987-65-4321, verify identity before proceeding.","spans":[{"start":13,"end":24,"label":"SOCIAL_SECURITY_NUMBER"}]}
+{"id":"014","text":"Passport No: A9823411B presented at checkpoint terminal 4.","spans":[{"start":13,"end":22,"label":"ID_NUMBER"}]}
+{"id":"015","text":"Shipment bound for Kyoto, postal code 604-8091.","spans":[{"start":19,"end":24,"label":"LOCATION"},{"start":38,"end":46,"label":"POSTAL_CODE"}]}
+{"id":"016","text":"do not leak api_key=sk_live_994a8bc72e10f3ab41 forprod","spans":[{"start":20,"end":46,"label":"SECRET"}]}
+{"id":"017","text":"hey pls mail marcus cole at m.cole_dev@gmail.com zip 90210 asap","spans":[{"start":13,"end":24,"label":"PERSON"},{"start":28,"end":48,"label":"EMAIL"},{"start":53,"end":58,"label":"POSTAL_CODE"}]}
+{"id":"018","text":"server log shows connection from 2001:0db8:85a3:0000:0000:8a2e:0370:7334 active.","spans":[{"start":33,"end":72,"label":"IP_ADDRESS"}]}
+{"id":"019","text":"Visit https://docs.python.org/3/library/json.html for schema specifications.","spans":[]}
+{"id":"020","text":"FORM DATA - Name: ELEANOR VANCE | Address: 124 RED HILL RD, SUITE 4","spans":[{"start":18,"end":31,"label":"PERSON"},{"start":43,"end":67,"label":"ADDRESS"}]}
+{"id":"021","text":"call me on (+44) 020 7946 0912 if there is any issue","spans":[{"start":11,"end":30,"label":"PHONE"}]}
+{"id":"022","text":"Refund initiated for customer Arthur Pendelton to account 9938210491.","spans":[{"start":30,"end":46,"label":"PERSON"},{"start":58,"end":68,"label":"BANK_ACCOUNT"}]}
+{"id":"023","text":"National ID ID-8839210-X registered under municipality of Valparaiso.","spans":[{"start":12,"end":24,"label":"ID_NUMBER"},{"start":58,"end":68,"label":"LOCATION"}]}
+{"id":"024","text":"ticket updated by user: @shadow_fox_88 (contact: shadow.fox@proton.me)","spans":[{"start":24,"end":38,"label":"USERNAME"},{"start":49,"end":69,"label":"EMAIL"}]}
+{"id":"025","text":"aws_secret_access_key = wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY","spans":[{"start":24,"end":64,"label":"SECRET"}]}
+{"id":"026","text":"Temperature reached 98.6 degrees with 45% humidity at 14:30 UTC.","spans":[]}
+{"id":"027","text":"Client record: SSN 123-45-6789 belonging to Chloe Bennett.","spans":[{"start":19,"end":30,"label":"SOCIAL_SECURITY_NUMBER"},{"start":44,"end":57,"label":"PERSON"}]}
+{"id":"028","text":"Card charged: 4532-0112-8834-9910 exp 09/28.","spans":[{"start":14,"end":33,"label":"CREDIT_CARD"}]}
+{"id":"029","text":"Send docs to 10 Downing Street, London, SW1A 2AA via courier.","spans":[{"start":13,"end":30,"label":"ADDRESS"},{"start":32,"end":38,"label":"LOCATION"},{"start":40,"end":48,"label":"POSTAL_CODE"}]}
+{"id":"030","text":"Your temporary password is 'P@ssw0rd_2026_Secure!'. Change it immediately.","spans":[{"start":28,"end":49,"label":"PASSWORD"}]}
+{"id":"031","text":"Note: Maya Patel (+91 98200 12345, m_patel@ai-health.org) scheduled for 2pm.","spans":[{"start":6,"end":16,"label":"PERSON"},{"start":18,"end":33,"label":"PHONE"},{"start":35,"end":56,"label":"EMAIL"}]}
+{"id":"032","text":"Direct deposit routed to acct # 89012345678 at main branch.","spans":[{"start":32,"end":43,"label":"BANK_ACCOUNT"}]}
+{"id":"033","text":"Transfer money to Zurich office with SWIFT: CITIUS33.","spans":[{"start":18,"end":24,"label":"LOCATION"},{"start":44,"end":52,"label":"SWIFT_CODE"}]}
+{"id":"034","text":"Driver license DL-904218-CA issued to Omar Farooq.","spans":[{"start":15,"end":27,"label":"ID_NUMBER"},{"start":38,"end":49,"label":"PERSON"}]}
+{"id":"035","text":"SSH login failed for admin_root from 10.0.0.42","spans":[{"start":21,"end":31,"label":"USERNAME"},{"start":37,"end":46,"label":"IP_ADDRESS"}]}
+{"id":"036","text":"Quarterly revenue increased by 18% to $4.2M in Q2 2026.","spans":[]}
+{"id":"037","text":"Return order to: 888 Industrial Pkwy, Bldg B, Chicago.","spans":[{"start":17,"end":44,"label":"ADDRESS"},{"start":46,"end":53,"label":"LOCATION"}]}
+{"id":"038","text":"sent token token_key_abc123xyz789 to dev.team@startup.io via slack","spans":[{"start":11,"end":33,"label":"SECRET"},{"start":37,"end":56,"label":"EMAIL"}]}
+{"id":"039","text":"met with samantha reed and discussed project timeline","spans":[{"start":9,"end":22,"label":"PERSON"}]}
+{"id":"040","text":"SMS sent to 555-0199 for verification code in area 90210.","spans":[{"start":12,"end":20,"label":"PHONE"},{"start":51,"end":56,"label":"POSTAL_CODE"}]}
+{"id":"041","text":"Cardholder: Hiroshi Tanaka, Card No: 3782 822463 10005","spans":[{"start":12,"end":26,"label":"PERSON"},{"start":37,"end":54,"label":"CREDIT_CARD"}]}
+{"id":"042","text":"Conference will be hosted in Montreal next spring.","spans":[{"start":29,"end":37,"label":"LOCATION"}]}
+{"id":"043","text":"Tax form submitted with SSN: 000-11-2233.","spans":[{"start":29,"end":40,"label":"SOCIAL_SECURITY_NUMBER"}]}
+{"id":"044","text":"CRM: user=@tech_guru / pass=s3cur3_p@ss! / email=techguru@domain.org","spans":[{"start":10,"end":20,"label":"USERNAME"},{"start":28,"end":40,"label":"PASSWORD"},{"start":49,"end":68,"label":"EMAIL"}]}
+{"id":"045","text":"Wire transfer to account 44091283011, SWIFT code: DEUTDEDDBXX.","spans":[{"start":25,"end":36,"label":"BANK_ACCOUNT"},{"start":50,"end":61,"label":"SWIFT_CODE"}]}
+{"id":"046","text":"Stock update: Item SKU-9082 has 150 units remaining in aisle 4.","spans":[]}
+{"id":"047","text":"National voter ID: VTR-881902-Z.","spans":[{"start":19,"end":31,"label":"ID_NUMBER"}]}
+{"id":"048","text":"HQ located at 500 Howard St, San Francisco.","spans":[{"start":14,"end":27,"label":"ADDRESS"},{"start":29,"end":42,"label":"LOCATION"}]}
+{"id":"049","text":"bearer token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwI30.signature","spans":[{"start":14,"end":88,"label":"SECRET"}]}
+{"id":"050","text":"Contact: Nina Patel | Tel: +1-555-0199 | Addr: 12 Ocean Ave | Mail: nina@patel.co","spans":[{"start":9,"end":19,"label":"PERSON"},{"start":27,"end":38,"label":"PHONE"},{"start":47,"end":59,"label":"ADDRESS"},{"start":68,"end":81,"label":"EMAIL"}]}
+{"id":"051","text":"Please send the payment receipt to @alex_m_2026 or call +33 1 42 68 53 00.","spans":[{"start":35,"end":47,"label":"USERNAME"},{"start":56,"end":73,"label":"PHONE"}]}
+{"id":"052","text":"Ticket #4092: User report from Berlin office (building 4, floor 2).","spans":[{"start":31,"end":37,"label":"LOCATION"}]}
+{"id":"053","text":"Customer record updated: Jane Doe, SSN: 900-12-3456, DOB: 1985-04-12.","spans":[{"start":25,"end":33,"label":"PERSON"},{"start":40,"end":51,"label":"SOCIAL_SECURITY_NUMBER"}]}
+{"id":"054","text":"debug log: authentication key secret_token_991823abx81 generated for admin","spans":[{"start":30,"end":54,"label":"SECRET"},{"start":69,"end":74,"label":"USERNAME"}]}
+{"id":"055","text":"Ship to 101 Pine St., Suite 200, Seattle, WA 98101","spans":[{"start":8,"end":31,"label":"ADDRESS"},{"start":33,"end":40,"label":"LOCATION"},{"start":45,"end":50,"label":"POSTAL_CODE"}]}
+{"id":"056","text":"Routing code: BKTRUS33XXX / Account Number: 009812345678","spans":[{"start":14,"end":25,"label":"SWIFT_CODE"},{"start":44,"end":56,"label":"BANK_ACCOUNT"}]}
+{"id":"057","text":"The price per unit is $29.99 for a total of $149.95 including VAT.","spans":[]}
+{"id":"058","text":"my username is lower_case_guy and mail is test.user.88@company.co.uk","spans":[{"start":15,"end":29,"label":"USERNAME"},{"start":42,"end":68,"label":"EMAIL"}]}
+{"id":"059","text":"User IP logged as 10.240.12.89 during session #8812.","spans":[{"start":18,"end":30,"label":"IP_ADDRESS"}]}
+{"id":"060","text":"CONFIDENTIAL: Password reset for carlos_m to 'P@ssw0rd#2026!'.","spans":[{"start":33,"end":41,"label":"USERNAME"},{"start":46,"end":60,"label":"PASSWORD"}]}
+{"id":"061","text":"National Identification Number: DE-9812739481 issued by Munich authority.","spans":[{"start":32,"end":45,"label":"ID_NUMBER"},{"start":56,"end":62,"label":"LOCATION"}]}
+{"id":"062","text":"billing notice: Visa 4111 2222 3333 4444 charged $120.00","spans":[{"start":21,"end":40,"label":"CREDIT_CARD"}]}
+{"id":"063","text":"The server status page can be viewed at https://status.global-services.net/health.","spans":[]}
+{"id":"064","text":"contact dr. vanessa guillén at v.guillen@clinic.org immediately","spans":[{"start":12,"end":27,"label":"PERSON"},{"start":31,"end":51,"label":"EMAIL"}]}
+{"id":"065","text":"Delivery address: 45 Rue de la Paix, Paris 75002","spans":[{"start":18,"end":35,"label":"ADDRESS"},{"start":37,"end":42,"label":"LOCATION"},{"start":43,"end":48,"label":"POSTAL_CODE"}]}
+{"id":"066","text":"Employee SSN [XXX-XX-XXXX] changed to 111-22-3334 in HR database.","spans":[{"start":38,"end":49,"label":"SOCIAL_SECURITY_NUMBER"}]}
+{"id":"067","text":"Forwarded conversation with Liam Gallagher liam.g@rocknet.co.uk:","spans":[{"start":28,"end":42,"label":"PERSON"},{"start":43,"end":63,"label":"EMAIL"}]}
+{"id":"068","text":"API Response: {\"status\": 200, \"message\": \"Success\", \"count\": 42}","spans":[]}
+{"id":"069","text":"Bank account details: IBAN FR7630006000011234567890189 / BIC: BNPAFRPP","spans":[{"start":27,"end":54,"label":"BANK_ACCOUNT"},{"start":62,"end":70,"label":"SWIFT_CODE"}]}
+{"id":"070","text":"Call office direct line +61 2 9250 7111 or mobile 0412 345 678.","spans":[{"start":24,"end":39,"label":"PHONE"},{"start":50,"end":62,"label":"PHONE"}]}
+{"id":"071","text":"id_card_num: ID-AZ-992182 issued in Phoenix.","spans":[{"start":13,"end":25,"label":"ID_NUMBER"},{"start":36,"end":43,"label":"LOCATION"}]}
+{"id":"072","text":"Set environment variable API_KEY=9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d.","spans":[{"start":33,"end":65,"label":"SECRET"}]}
+{"id":"073","text":"IPv6 traceroute target: fe80::1ff:fe18:89ab%eth0","spans":[{"start":24,"end":48,"label":"IP_ADDRESS"}]}
+{"id":"074","text":"Account holder ROBERT TAYLOR (ACCT 987654321) requested closing balance.","spans":[{"start":15,"end":28,"label":"PERSON"},{"start":35,"end":44,"label":"BANK_ACCOUNT"}]}
+{"id":"075","text":"Total headcount for the Q3 planning meeting is 14 participants.","spans":[]}
+{"id":"076","text":"Postcode for delivery: CB2 1TN (Cambridge area)","spans":[{"start":23,"end":30,"label":"POSTAL_CODE"},{"start":32,"end":41,"label":"LOCATION"}]}
+{"id":"077","text":"pls respond to user @tech_support_sam at sam.support@helpdesk.io","spans":[{"start":20,"end":37,"label":"USERNAME"},{"start":41,"end":64,"label":"EMAIL"}]}
+{"id":"078","text":"SSN: 456-78-9012 | Driver License: DL-339281","spans":[{"start":5,"end":16,"label":"SOCIAL_SECURITY_NUMBER"},{"start":35,"end":44,"label":"ID_NUMBER"}]}
+{"id":"079","text":"Note: temp pass is set to Admin_Pass_2026! for user root_admin","spans":[{"start":26,"end":42,"label":"PASSWORD"},{"start":52,"end":62,"label":"USERNAME"}]}
+{"id":"080","text":"Location: 555 Market St, Floor 12, San Francisco, CA 94105","spans":[{"start":10,"end":33,"label":"ADDRESS"},{"start":35,"end":48,"label":"LOCATION"},{"start":53,"end":58,"label":"POSTAL_CODE"}]}
+{"id":"081","text":"Contact person: Dr. Aris Thorne (email: a.thorne@genomics.org)","spans":[{"start":20,"end":31,"label":"PERSON"},{"start":40,"end":61,"label":"EMAIL"}]}
+{"id":"082","text":"Payment card 5412 7512 3456 7890 expires 11/29. CVV on file.","spans":[{"start":13,"end":32,"label":"CREDIT_CARD"}]}
+{"id":"083","text":"System reboot scheduled for Sunday at 02:00 AM EST.","spans":[]}
+{"id":"084","text":"auth token: bearer_token_xyz_9981234567890","spans":[{"start":12,"end":42,"label":"SECRET"}]}
+{"id":"085","text":"SWIFT: HSBCGB2L123 / BEN: John Smith / ACCT: 1122334455","spans":[{"start":7,"end":18,"label":"SWIFT_CODE"},{"start":26,"end":36,"label":"PERSON"},{"start":45,"end":55,"label":"BANK_ACCOUNT"}]}
+{"id":"086","text":"Passport # 99281029C presented by Kaito Yamada.","spans":[{"start":11,"end":20,"label":"ID_NUMBER"},{"start":34,"end":46,"label":"PERSON"}]}
+{"id":"087","text":"Please send mail to po box 402, Boston MA 02110","spans":[{"start":20,"end":30,"label":"ADDRESS"},{"start":32,"end":38,"label":"LOCATION"},{"start":42,"end":47,"label":"POSTAL_CODE"}]}
+{"id":"088","text":"call support at +81 3 1234 5678 or text 090-1234-5678","spans":[{"start":16,"end":31,"label":"PHONE"},{"start":40,"end":53,"label":"PHONE"}]}
+{"id":"089","text":"Default gateway changed to 172.16.254.1 for subnet A.","spans":[{"start":27,"end":39,"label":"IP_ADDRESS"}]}
+{"id":"090","text":"The flight from Tokyo to London takes approximately 14 hours.","spans":[{"start":16,"end":21,"label":"LOCATION"},{"start":25,"end":31,"label":"LOCATION"}]}
+{"id":"091","text":"username: @cyber_ninja / pass: MyS3cr3tP@ss! / email: ninja@cyber.net","spans":[{"start":10,"end":22,"label":"USERNAME"},{"start":31,"end":44,"label":"PASSWORD"},{"start":54,"end":69,"label":"EMAIL"}]}
+{"id":"092","text":"Customer service phone: (800) 555-0199 (Toll Free)","spans":[{"start":24,"end":38,"label":"PHONE"}]}
+{"id":"093","text":"The stock ticker AAPL closed at $220.45, up 2.3% today.","spans":[]}
+{"id":"094","text":"SSN verification failed for candidate 321-65-9870.","spans":[{"start":38,"end":49,"label":"SOCIAL_SECURITY_NUMBER"}]}
+{"id":"095","text":"Send response to lucas.silva@empresa.com.br asap.","spans":[{"start":17,"end":43,"label":"EMAIL"}]}
+{"id":"096","text":"National ID: 881203-9912 belongs to Maria Santos.","spans":[{"start":13,"end":24,"label":"ID_NUMBER"},{"start":36,"end":48,"label":"PERSON"}]}
+{"id":"097","text":"private_key: secret_key_live_88392019284719284","spans":[{"start":13,"end":46,"label":"SECRET"}]}
+{"id":"098","text":"Account balance of $5,430.00 transferred to account 9912830491.","spans":[{"start":52,"end":62,"label":"BANK_ACCOUNT"}]}
+{"id":"099","text":"billing address: 1234 Elm Street, Suite 500, Austin, TX 78701","spans":[{"start":17,"end":43,"label":"ADDRESS"},{"start":45,"end":51,"label":"LOCATION"},{"start":56,"end":61,"label":"POSTAL_CODE"}]}
+{"id":"100","text":"Contact lead developer hannah black at h.black@techcorp.io or @hannah_dev","spans":[{"start":23,"end":35,"label":"PERSON"},{"start":39,"end":58,"label":"EMAIL"},{"start":62,"end":73,"label":"USERNAME"}]}
+{"id":"101","text":"Please update payment card 4532 9981 2049 1102 or bank account 98120394812.","spans":[{"start":27,"end":46,"label":"CREDIT_CARD"},{"start":63,"end":74,"label":"BANK_ACCOUNT"}]}
+{"id":"102","text":"Server migration from 192.168.4.12 to 2001:0db8:85a3:0000:0000:8a2e:0370:7334 completed.","spans":[{"start":22,"end":34,"label":"IP_ADDRESS"},{"start":38,"end":77,"label":"IP_ADDRESS"}]}
+{"id":"103","text":"login error: user @admin_dev_99 with pwd SecretP@ss2026! failed 3 times","spans":[{"start":18,"end":31,"label":"USERNAME"},{"start":41,"end":56,"label":"PASSWORD"}]}
+{"id":"104","text":"Wire funds via SWIFT BACAATWWXXX to account DE89370400440532013000.","spans":[{"start":21,"end":32,"label":"SWIFT_CODE"},{"start":44,"end":66,"label":"BANK_ACCOUNT"}]}
+{"id":"105","text":"Identity check: SSN 999-12-8841 and Driver ID DL-8849102-X verified.","spans":[{"start":20,"end":31,"label":"SOCIAL_SECURITY_NUMBER"},{"start":46,"end":58,"label":"ID_NUMBER"}]}
+{"id":"106","text":"Export key AWS_SECRET_ACCESS_KEY=aBc123XyZ9874561234567890abcdef12345 to 10.100.2.15","spans":[{"start":33,"end":69,"label":"SECRET"},{"start":73,"end":84,"label":"IP_ADDRESS"}]}
+{"id":"107","text":"The annual report for fiscal year 2025 showed a revenue increase of 14.5% across all regions.","spans":[]}
+{"id":"108","text":"Refund processed on card 3712 893012 40192 for $89.50.","spans":[{"start":25,"end":42,"label":"CREDIT_CARD"}]}
+{"id":"109","text":"User root_admin_01 connected from IP 172.31.0.88 via SSH.","spans":[{"start":5,"end":18,"label":"USERNAME"},{"start":37,"end":48,"label":"IP_ADDRESS"}]}
+{"id":"110","text":"db_password='Super_Secure_Pass_2026!' & api_secret=sec_live_9981230491823","spans":[{"start":13,"end":36,"label":"PASSWORD"},{"start":51,"end":73,"label":"SECRET"}]}
+{"id":"111","text":"Beneficiary bank SWIFT: CHASS33XXX | Routing account: 40918239012","spans":[{"start":24,"end":34,"label":"SWIFT_CODE"},{"start":54,"end":65,"label":"BANK_ACCOUNT"}]}
+{"id":"112","text":"Verification docs required: SSN (000-88-9912) or Passport (P88192039).","spans":[{"start":33,"end":44,"label":"SOCIAL_SECURITY_NUMBER"},{"start":59,"end":68,"label":"ID_NUMBER"}]}
+{"id":"113","text":"Please submit all expense reports by 5:00 PM EST on Friday, October 24th.","spans":[]}
+{"id":"114","text":"DO NOT COMMIT: private token secret_token_99182a3b4c5d6e7f8g9h","spans":[{"start":29,"end":62,"label":"SECRET"}]}
+{"id":"115","text":"Charge $45.00 to card 4000123456789010 (billing zip 90210).","spans":[{"start":22,"end":38,"label":"CREDIT_CARD"},{"start":52,"end":57,"label":"POSTAL_CODE"}]}
+{"id":"116","text":"Block inbound connections from IPv6 fe80::202:b3ff:fe1e:8329 immediately.","spans":[{"start":36,"end":60,"label":"IP_ADDRESS"}]}
+{"id":"117","text":"Your temporary passkey is: K9#mP$7vQ!2x - expires in 10 minutes.","spans":[{"start":27,"end":39,"label":"PASSWORD"}]}
+{"id":"118","text":"Transfer $1,200 to IBAN GB29NWBK60161331926819 with SWIFT NWBKGB2L.","spans":[{"start":24,"end":46,"label":"BANK_ACCOUNT"},{"start":58,"end":66,"label":"SWIFT_CODE"}]}
+{"id":"119","text":"National identity card number: ID-7718290-A (issued 2021).","spans":[{"start":31,"end":43,"label":"ID_NUMBER"}]}
+{"id":"120","text":"The conference will take place at the Grand Ballroom, featuring keynotes from industry leaders.","spans":[]}
+{"id":"121","text":"Tax record update: SSN 123-00-9876 approved.","spans":[{"start":23,"end":34,"label":"SOCIAL_SECURITY_NUMBER"}]}
+{"id":"122","text":"auth token: auth_key_live_8830192840129480 for user @sys_admin_99","spans":[{"start":12,"end":42,"label":"SECRET"},{"start":52,"end":65,"label":"USERNAME"}]}
+{"id":"123","text":"MasterCard 5100 2200 3300 4400 was declined due to insufficient funds.","spans":[{"start":11,"end":30,"label":"CREDIT_CARD"}]}
+{"id":"124","text":"Node at 192.168.10.250 registered under physical location 404 Tech Way, Suite 100.","spans":[{"start":8,"end":22,"label":"IP_ADDRESS"},{"start":58,"end":81,"label":"ADDRESS"}]}
+{"id":"125","text":"Reset pass for test.account@devnet.org: set temporary to P@sscode_2026!#","spans":[{"start":15,"end":38,"label":"EMAIL"},{"start":57,"end":72,"label":"PASSWORD"}]}
+{"id":"126","text":"Please specify SWIFT / BIC code BARCGB22XXX when setting up international wire.","spans":[{"start":32,"end":43,"label":"SWIFT_CODE"}]}
+{"id":"127","text":"Account number 99812039481 linked to SMS notification phone +1-555-0149.","spans":[{"start":15,"end":26,"label":"BANK_ACCOUNT"},{"start":60,"end":71,"label":"PHONE"}]}
+{"id":"128","text":"Passport number A1239874B issued to Arthur Dent.","spans":[{"start":16,"end":25,"label":"ID_NUMBER"},{"start":36,"end":47,"label":"PERSON"}]}
+{"id":"129","text":"HTTP status code 404: The requested resource could not be found on server 3.","spans":[]}
+{"id":"130","text":"Applicant details - SSN: 888-12-3456 / Phone: (555) 019-2831","spans":[{"start":25,"end":36,"label":"SOCIAL_SECURITY_NUMBER"},{"start":46,"end":60,"label":"PHONE"}]}
+{"id":"131","text":"Environment config: GH_TOKEN=ghp_998123456789abcdefghijklmnopqrstuv","spans":[{"start":29,"end":67,"label":"SECRET"}]}
+{"id":"132","text":"Card 4111-2222-3333-4444 auto-debits from checking account 0098123456.","spans":[{"start":5,"end":24,"label":"CREDIT_CARD"},{"start":59,"end":69,"label":"BANK_ACCOUNT"}]}
+{"id":"133","text":"Target host 10.0.8.125 responded with latency 14ms.","spans":[{"start":12,"end":22,"label":"IP_ADDRESS"}]}
+{"id":"134","text":"credentials: username=@dev_admin_00 / password=Tr0ub4dour&2026","spans":[{"start":22,"end":35,"label":"USERNAME"},{"start":47,"end":62,"label":"PASSWORD"}]}
+{"id":"135","text":"Bank Identifier: DEUTDEFF / ACCT NO: 8812039481","spans":[{"start":17,"end":25,"label":"SWIFT_CODE"},{"start":37,"end":47,"label":"BANK_ACCOUNT"}]}
+{"id":"136","text":"The dimensions of the shipping crate are 120cm x 80cm x 60cm with a total weight of 45kg.","spans":[]}
+{"id":"137","text":"SSN 000-44-5566 matched Driver License DL-992019-B.","spans":[{"start":4,"end":15,"label":"SOCIAL_SECURITY_NUMBER"},{"start":39,"end":50,"label":"ID_NUMBER"}]}
+{"id":"138","text":"api_key=sk_test_51Mz0928301928401928401928","spans":[{"start":8,"end":42,"label":"SECRET"}]}
+{"id":"139","text":"Billed to card 4532 0112 9840 2210 at 742 Evergreen Terrace.","spans":[{"start":15,"end":34,"label":"CREDIT_CARD"},{"start":38,"end":59,"label":"ADDRESS"}]}
+{"id":"140","text":"Server 10.200.15.4 compromised via leaked key slack_bot_token_xoxb_991823019.","spans":[{"start":7,"end":18,"label":"IP_ADDRESS"},{"start":46,"end":76,"label":"SECRET"}]}
+{"id":"141","text":"Default password 'ChangeMeNow_2026!' must be updated at first logon.","spans":[{"start":18,"end":35,"label":"PASSWORD"}]}
+{"id":"142","text":"Deposit funds to bank account 11029384019 using SWIFT code BOFAUS3N.","spans":[{"start":30,"end":41,"label":"BANK_ACCOUNT"},{"start":59,"end":67,"label":"SWIFT_CODE"}]}
+{"id":"143","text":"National ID ID-4401928-C belongs to Fiona Gallagher.","spans":[{"start":12,"end":24,"label":"ID_NUMBER"},{"start":36,"end":51,"label":"PERSON"}]}
+{"id":"144","text":"Social Security Number: 987-65-4321 (verified on file).","spans":[{"start":24,"end":35,"label":"SOCIAL_SECURITY_NUMBER"}]}
+{"id":"145","text":"Order #88120 has been processed and is ready for pickup at locker 4B.","spans":[]}
+{"id":"146","text":"config secret jwt_secret_token=eyJhbGciOiJIUzI1NiJ9 on host 10.1.1.50","spans":[{"start":31,"end":51,"label":"SECRET"},{"start":60,"end":69,"label":"IP_ADDRESS"}]}
+{"id":"147","text":"Amex 3782 822463 10005 linked to zip 02138.","spans":[{"start":5,"end":22,"label":"CREDIT_CARD"},{"start":37,"end":42,"label":"POSTAL_CODE"}]}
+{"id":"148","text":"Failed SSH login for user @root_admin from IPv6 2001:db8::1","spans":[{"start":26,"end":37,"label":"USERNAME"},{"start":48,"end":59,"label":"IP_ADDRESS"}]}
+{"id":"149","text":"Account pass reset: email target admin@devsec.io set to Temp_Pass_8892!","spans":[{"start":33,"end":48,"label":"EMAIL"},{"start":56,"end":71,"label":"PASSWORD"}]}
+{"id":"150","text":"Wire $500 to account 99182304918 (SWIFT: CHASUS33), contact +1-555-0188 if delayed.","spans":[{"start":21,"end":32,"label":"BANK_ACCOUNT"},{"start":41,"end":49,"label":"SWIFT_CODE"},{"start":60,"end":71,"label":"PHONE"}]}
+{"id":"151","text":"Update billing address to 452 Oak Ridge Ln, Apt 4B, Miami, FL 33101.","spans":[{"start":26,"end":50,"label":"ADDRESS"},{"start":52,"end":57,"label":"LOCATION"},{"start":62,"end":67,"label":"POSTAL_CODE"}]}
+{"id":"152","text":"Payment card 4111 2222 3333 4444 charged $12.50.","spans":[{"start":13,"end":32,"label":"CREDIT_CARD"}]}
+{"id":"153","text":"Please input your SSN 000-12-3456 and password P@ss2026! to confirm.","spans":[{"start":22,"end":33,"label":"SOCIAL_SECURITY_NUMBER"},{"start":47,"end":56,"label":"PASSWORD"}]}
+{"id":"154","text":"Wire transfer instructions: SWIFT code SBICINBB123, Account 98120394812.","spans":[{"start":39,"end":50,"label":"SWIFT_CODE"},{"start":60,"end":71,"label":"BANK_ACCOUNT"}]}
+{"id":"155","text":"The system backup finished in 4 minutes and 12 seconds without errors.","spans":[]}
+{"id":"156","text":"Mail package to 123 Industrial Way, Suite 10, Chicago IL 60601.","spans":[{"start":16,"end":44,"label":"ADDRESS"},{"start":46,"end":53,"label":"LOCATION"},{"start":57,"end":62,"label":"POSTAL_CODE"}]}
+{"id":"157","text":"Your new temporary password is: Temp#Pass_9981 - reset upon login.","spans":[{"start":32,"end":46,"label":"PASSWORD"}]}
+{"id":"158","text":"Mastercard ending in 5412-8834-1102-9923 was charged $150.00.","spans":[{"start":21,"end":40,"label":"CREDIT_CARD"}]}
+{"id":"159","text":"Verify employee SSN 321-45-6789 before completing onboarding.","spans":[{"start":20,"end":31,"label":"SOCIAL_SECURITY_NUMBER"}]}
+{"id":"160","text":"Bank transfer code: DBKKDEFFXXX (Deutsche Bank branch).","spans":[{"start":20,"end":31,"label":"SWIFT_CODE"}]}
+{"id":"161","text":"Shipment routed to postal zip code 90210 in Beverly Hills.","spans":[{"start":35,"end":40,"label":"POSTAL_CODE"},{"start":44,"end":57,"label":"LOCATION"}]}
+{"id":"162","text":"User @dev_sec_01 updated password to Secr3t!2026_ pass.","spans":[{"start":5,"end":16,"label":"USERNAME"},{"start":37,"end":49,"label":"PASSWORD"}]}
+{"id":"163","text":"The HTTP GET request returned status 200 OK with payload size 1024 bytes.","spans":[]}
+{"id":"164","text":"Office location: 100 North Main Street, Suite 500, Austin TX 78701.","spans":[{"start":17,"end":49,"label":"ADDRESS"},{"start":51,"end":57,"label":"LOCATION"},{"start":61,"end":66,"label":"POSTAL_CODE"}]}
+{"id":"165","text":"Charge card 3782 822463 10005 for renewal subscription.","spans":[{"start":12,"end":29,"label":"CREDIT_CARD"}]}
+{"id":"166","text":"SSN record: 999-00-1234. Please store securely.","spans":[{"start":12,"end":23,"label":"SOCIAL_SECURITY_NUMBER"}]}
+{"id":"167","text":"Interbank transfer SWIFT: BOFAUS3NXXX, beneficiary account 40912830192.","spans":[{"start":26,"end":37,"label":"SWIFT_CODE"},{"start":59,"end":70,"label":"BANK_ACCOUNT"}]}
+{"id":"168","text":"Postcode for delivery: SW1A 1AA, London, UK.","spans":[{"start":23,"end":31,"label":"POSTAL_CODE"},{"start":33,"end":39,"label":"LOCATION"}]}
+{"id":"169","text":"Default password reset to 'MyStrongP@ss2026!' by administrator.","spans":[{"start":27,"end":44,"label":"PASSWORD"}]}
+{"id":"170","text":"Connect via SSH to IP 192.168.1.250 with key secret_token_98120394.","spans":[{"start":22,"end":35,"label":"IP_ADDRESS"},{"start":45,"end":66,"label":"SECRET"}]}
+{"id":"171","text":"Primary billing address: 789 Broadway, Floor 4, New York, NY 10003.","spans":[{"start":25,"end":46,"label":"ADDRESS"},{"start":48,"end":56,"label":"LOCATION"},{"start":61,"end":66,"label":"POSTAL_CODE"}]}
+{"id":"172","text":"All server clusters are operating at 99.99% uptime for the current quarter.","spans":[]}
+{"id":"173","text":"Visa card 4532 0112 3456 7890 auto-refills account balance.","spans":[{"start":10,"end":29,"label":"CREDIT_CARD"}]}
+{"id":"174","text":"Applicant identity verified: SSN 123-45-6789 and DL ID-8839201.","spans":[{"start":33,"end":44,"label":"SOCIAL_SECURITY_NUMBER"},{"start":52,"end":62,"label":"ID_NUMBER"}]}
+{"id":"175","text":"SWIFT ID: CITIUS33XXX for electronic wire processing.","spans":[{"start":10,"end":21,"label":"SWIFT_CODE"}]}
+{"id":"176","text":"Enter postal code 02138 for Cambridge delivery zone.","spans":[{"start":18,"end":23,"label":"POSTAL_CODE"},{"start":28,"end":37,"label":"LOCATION"}]}
+{"id":"177","text":"Account pass changed to 'Ch@ngeM3_Now2026!' for safety.","spans":[{"start":25,"end":42,"label":"PASSWORD"}]}
+{"id":"178","text":"Residential address: 456 Elm Street, Apt 12, Seattle WA 98101.","spans":[{"start":21,"end":43,"label":"ADDRESS"},{"start":45,"end":52,"label":"LOCATION"},{"start":56,"end":61,"label":"POSTAL_CODE"}]}
+{"id":"179","text":"Contact customer service at support@company.com or +1-800-555-0199.","spans":[{"start":28,"end":47,"label":"EMAIL"},{"start":51,"end":66,"label":"PHONE"}]}
+{"id":"180","text":"The package weight is estimated at 3.5 kilograms with express shipping.","spans":[]}
+{"id":"181","text":"Credit card refund issued to 4000 1234 5678 9010.","spans":[{"start":29,"end":48,"label":"CREDIT_CARD"}]}
+{"id":"182","text":"Record SSN: 456-78-9012 for HR payroll processing.","spans":[{"start":12,"end":23,"label":"SOCIAL_SECURITY_NUMBER"}]}
+{"id":"183","text":"SWIFT transfer: CHASUS33XXX to routing account 8812039481.","spans":[{"start":16,"end":27,"label":"SWIFT_CODE"},{"start":47,"end":57,"label":"BANK_ACCOUNT"}]}
+{"id":"184","text":"Postal code 75001 registered for Paris store.","spans":[{"start":12,"end":17,"label":"POSTAL_CODE"},{"start":33,"end":38,"label":"LOCATION"}]}
+{"id":"185","text":"Store credentials: user=@sys_user_99 / pass=Tr0ub4d0ur!2026","spans":[{"start":24,"end":36,"label":"USERNAME"},{"start":44,"end":59,"label":"PASSWORD"}]}
+{"id":"186","text":"Warehouse location: 1200 Industrial Blvd, Gate 3, Dallas TX 75201.","spans":[{"start":20,"end":48,"label":"ADDRESS"},{"start":50,"end":56,"label":"LOCATION"},{"start":60,"end":65,"label":"POSTAL_CODE"}]}
+{"id":"187","text":"API secret token: secret_key_live_9981230491823 on host 10.0.1.15.","spans":[{"start":18,"end":47,"label":"SECRET"},{"start":56,"end":65,"label":"IP_ADDRESS"}]}
+{"id":"188","text":"Payment card 5100 2200 3300 4400 expired on 08/26.","spans":[{"start":13,"end":32,"label":"CREDIT_CARD"}]}
+{"id":"189","text":"Meeting adjourned at 4:30 PM with 8 votes in favor and 2 opposed.","spans":[]}
+{"id":"190","text":"SSN verification: 000-99-8877 registered under ID A9918203.","spans":[{"start":18,"end":29,"label":"SOCIAL_SECURITY_NUMBER"},{"start":50,"end":58,"label":"ID_NUMBER"}]}
+{"id":"191","text":"Wire to SWIFT code HSBCGB2LXXX / account # 1122334455.","spans":[{"start":19,"end":30,"label":"SWIFT_CODE"},{"start":43,"end":53,"label":"BANK_ACCOUNT"}]}
+{"id":"192","text":"Postal code 10001 corresponds to New York location.","spans":[{"start":12,"end":17,"label":"POSTAL_CODE"},{"start":33,"end":41,"label":"LOCATION"}]}
+{"id":"193","text":"Temp password for account: P@ss_Word_2026!#","spans":[{"start":27,"end":43,"label":"PASSWORD"}]}
+{"id":"194","text":"Return shipping to 321 Oak Street, Suite 100, Denver CO 80202.","spans":[{"start":19,"end":44,"label":"ADDRESS"},{"start":46,"end":52,"label":"LOCATION"},{"start":56,"end":61,"label":"POSTAL_CODE"}]}
+{"id":"195","text":"MasterCard 5412 7512 3456 7890 billable to zip 94105.","spans":[{"start":11,"end":30,"label":"CREDIT_CARD"},{"start":47,"end":52,"label":"POSTAL_CODE"}]}
+{"id":"196","text":"The product manual is available for download at version 2.4.0.","spans":[]}
+{"id":"197","text":"Form input: SSN 987-65-4321 | Driver License DL-009182.","spans":[{"start":16,"end":27,"label":"SOCIAL_SECURITY_NUMBER"},{"start":45,"end":54,"label":"ID_NUMBER"}]}
+{"id":"198","text":"International SWIFT code BARCGB22XXX for Barclays bank account 0098123456.","spans":[{"start":25,"end":36,"label":"SWIFT_CODE"},{"start":63,"end":73,"label":"BANK_ACCOUNT"}]}
+{"id":"199","text":"Address record: 1500 Market Street, Floor 18, Philadelphia PA 19102.","spans":[{"start":16,"end":44,"label":"ADDRESS"},{"start":46,"end":58,"label":"LOCATION"},{"start":62,"end":67,"label":"POSTAL_CODE"}]}
+{"id":"200","text":"Final audit entry: user @admin_root set temp pass SecUr3_2026! on 10.0.0.1","spans":[{"start":24,"end":35,"label":"USERNAME"},{"start":50,"end":62,"label":"PASSWORD"},{"start":66,"end":74,"label":"IP_ADDRESS"}]}
