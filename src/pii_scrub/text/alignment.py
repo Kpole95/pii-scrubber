@@ -7,7 +7,6 @@ models.
 """
 
 from collections.abc import Mapping, Sequence
-from itertools import pairwise
 from typing import Any, Protocol
 
 from pii_scrub.text.spans import parse_bio_label
@@ -233,9 +232,13 @@ def _validate_coverage(words: Sequence[str], coverage: dict[int, list[tuple[int,
         ranges = sorted(coverage.get(word_id, []))
         if not ranges:
             raise ValueError(f"tokenizer produced no offsets for word {word!r} at index {word_id}")
-        if ranges[0][0] != 0 or ranges[-1][1] != len(word):
+        if ranges[0][0] != 0 or max(end for _, end in ranges) != len(word):
             raise ValueError(f"token offsets do not fully cover word {word!r} at index {word_id}")
-        if any(left[1] != right[0] for left, right in pairwise(ranges)):
-            raise ValueError(
-                f"token offsets contain a gap or overlap for word {word!r} at index {word_id}"
-            )
+
+        covered_end = ranges[0][1]
+        for start, end in ranges[1:]:
+            if start > covered_end:
+                raise ValueError(
+                    f"token offsets contain a gap for word {word!r} at index {word_id}"
+                )
+            covered_end = max(covered_end, end)

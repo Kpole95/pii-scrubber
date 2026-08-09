@@ -3,7 +3,7 @@
 import pytest
 
 from pii_scrub.text import align_bio_to_subwords
-from tests.unit.text.conftest import FakeFastTokenizer
+from tests.unit.text.conftest import FakeEncoding, FakeFastTokenizer
 
 
 def test_all_subwords_propagates_labels(
@@ -271,3 +271,24 @@ def test_alignment_rejects_invalid_max_length_type(
             tokenizer=toy_tokenizer,
             max_length=max_length,  # type: ignore[arg-type]
         )
+
+
+def test_alignment_allows_overlapping_offsets_without_gaps() -> None:
+    """SentencePiece-style overlap is valid when all characters are covered."""
+
+    class OverlapTokenizer(FakeFastTokenizer):
+        def __call__(self, words: list[str], **kwargs: object) -> FakeEncoding:
+            encoding = super().__call__(words, **kwargs)
+            encoding.data["offset_mapping"] = [(0, 0), (0, 1), (0, 1), (1, 9), (0, 0)]
+            encoding._word_ids = [None, 0, 0, 0, None]
+            encoding._tokens = ["[CLS]", "▁", "₨", "Pakistan", "[SEP]"]
+            encoding.data["input_ids"] = [1, 4, 5, 6, 2]
+            encoding.data["attention_mask"] = [1] * 5
+            return encoding
+
+    tokenizer = OverlapTokenizer(
+        {"[UNK]": 0, "[CLS]": 1, "[SEP]": 2, "[PAD]": 3, "▁": 4, "₨": 5, "Pakistan": 6}
+    )
+    example = align_bio_to_subwords("₨Pakistan", ["₨Pakistan"], ["B-LOCATION"], tokenizer)
+
+    assert example.token_labels == (None, "B-LOCATION", "I-LOCATION", "I-LOCATION", None)

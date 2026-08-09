@@ -11,13 +11,19 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.optional-dependencies]
-ml = ["torch>=2.4", "transformers>=4.48"]
+ml = [
+    "torch>=2.4",
+    "transformers>=4.48",
+    "sentencepiece>=0.2",
+    "protobuf>=5",
+    "accelerate>=1.1",
+]
 presidio = [
     "presidio-analyzer>=2.2",
     "en-core-web-lg @ https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl",
 ]
 research = ["datasets>=3.2", "pyyaml>=6.0"]
-dev = ["pytest>=8.3", "ruff>=0.9", "mypy>=1.14"]
+dev = ["pytest>=8.3", "ruff>=0.9", "mypy>=1.14", "types-PyYAML>=6.0",]
 
 [project.scripts]
 pii-scrub = "pii_scrub.cli:main"
@@ -56,3 +62,4 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = ["datasets", "datasets.*"]
 ignore_missing_imports = true
+

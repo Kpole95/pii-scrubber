@@ -27,7 +27,7 @@ class FakeEncoding:
 class FakeFastTokenizer:
     """Tokenize pre-split words with a minimal greedy WordPiece algorithm."""
 
-    unk_token = "[UNK]"
+    unk_token: str | None = "[UNK]"
 
     def __init__(self, vocabulary: dict[str, int]) -> None:
         self.vocabulary = vocabulary
@@ -73,6 +73,7 @@ class FakeFastTokenizer:
                     match = token
                     break
             if match is None:
+                assert self.unk_token is not None
                 return [self.unk_token]
             pieces.append(match)
             cursor = end
