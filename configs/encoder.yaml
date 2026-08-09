@@ -1,7 +1,8 @@
 model_name: microsoft/deberta-v3-base
 seed: 42
-learning_rate: 2.0e-5
-batch_size: 16
+learning_rate: 5.0e-6
+batch_size: 8
+gradient_accumulation_steps: 4
 epochs: 4
 max_length: 512
 window_overlap: 64

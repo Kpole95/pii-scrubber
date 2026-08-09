@@ -32,7 +32,6 @@ def main() -> None:
         validation_examples = validation_examples[: args.validation_limit]
 
     tokenizer = AutoTokenizer.from_pretrained(config["model_name"], use_fast=True)
-
     labels = build_label_mapping(artifact.split.train)
     id2label = {index: label for label, index in labels.items()}
 
@@ -65,6 +64,7 @@ def main() -> None:
         learning_rate=config["learning_rate"],
         per_device_train_batch_size=config["batch_size"],
         per_device_eval_batch_size=config["batch_size"],
+        gradient_accumulation_steps=config["gradient_accumulation_steps"],
         num_train_epochs=config["epochs"],
         max_steps=args.max_steps if args.max_steps is not None else -1,
         seed=config["seed"],
@@ -74,6 +74,8 @@ def main() -> None:
         metric_for_best_model="eval_loss",
         greater_is_better=False,
         save_total_limit=2,
+        logging_steps=50,
+        logging_nan_inf_filter=False,
         report_to="none",
     )
 
