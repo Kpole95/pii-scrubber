@@ -4,17 +4,20 @@ PII Scrubber is a local-first Python library and CLI that detects and replaces p
 
 ## Current status
 
-This archive contains a cleaned and refactored **Milestone 1 foundation**:
+The repository currently contains the completed **Milestone 1 foundation**:
 
 - strict BIO and subword alignment with document-global offsets;
 - exact character-span reconstruction and overlapping-window merging;
-- OpenPII and Gretel Finance normalization;
+- normalized Ai4Privacy and CoNLL-2003 benchmark adapters;
 - deterministic splits, JSONL artifacts, manifests, and statistics;
+- a fixed 200-example hand-labeled real/OOD benchmark;
 - reversible replacement plus a functional regex-backed API and CLI;
+- regex and Microsoft Presidio baseline evaluation across all three benchmarks;
 - leak rate, exact/partial span F1, per-entity recall, over-redaction, and ECE;
-- 282 offline tests.
+- a reproducible baseline runner and Markdown comparison report;
+- 329 offline tests.
 
-Encoder and generative training loops are not implemented in this ZIP. Empty model-training files would create false progress, so those modules should be added only with executable behaviour and tests.
+Encoder and generative training loops are not implemented yet. Empty model-training files would create false progress, so those modules should be added only with executable behaviour and tests.
 
 ## Install
 
@@ -72,7 +75,7 @@ pii-scrubber/
 │   ├── eval/                   span-level metrics
 │   ├── train/                  added when training loops are implemented
 │   ├── labeled_ood/            hand-labeled real-text test set
-│   └── results/                committed JSON and Markdown reports
+│   └── results/                reproducible generated evaluation reports
 ├── scripts/                    repository and experiment entry points
 ├── tests/
 │   ├── unit/
