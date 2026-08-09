@@ -52,4 +52,4 @@ raw dataset row
     -> DatasetExample
     -> CharacterSpan
     -> Stage 3 BIO/subword alignment
-    -> future training or evaluation
+    -> training or evaluation
