@@ -1,14 +1,15 @@
-"""Tests for the baseline evaluation CLI."""
+"""Tests for the detector evaluation CLI."""
 
 from pathlib import Path
 
-from scripts.run_evaluation import _parser
+import pytest
+
+from scripts.run_evaluation import _build_detector, _parser
 
 
-def test_parser_accepts_required_arguments(
-    tmp_path: Path,
-) -> None:
+def test_parser_accepts_required_arguments(tmp_path: Path) -> None:
     """The CLI should parse one complete evaluation run."""
+
     input_path = tmp_path / "input.jsonl"
     output_path = tmp_path / "report.json"
 
@@ -28,10 +29,9 @@ def test_parser_accepts_required_arguments(
     assert args.output == output_path
 
 
-def test_parser_accepts_artifact_split(
-    tmp_path: Path,
-) -> None:
+def test_parser_accepts_artifact_split(tmp_path: Path) -> None:
     """The CLI should accept an artifact dataset split."""
+
     args = _parser().parse_args(
         [
             "--detector",
@@ -51,10 +51,9 @@ def test_parser_accepts_artifact_split(
     assert args.split == "test"
 
 
-def test_parser_accepts_conll_source(
-    tmp_path: Path,
-) -> None:
+def test_parser_accepts_conll_source(tmp_path: Path) -> None:
     """The CLI should accept a CoNLL parquet source."""
+
     args = _parser().parse_args(
         [
             "--detector",
@@ -72,3 +71,35 @@ def test_parser_accepts_conll_source(
 
     assert args.dataset == "conll"
     assert args.data_file == "example.parquet"
+
+
+def test_parser_accepts_encoder_model(tmp_path: Path) -> None:
+    """The CLI should accept an encoder model path and device."""
+
+    model_path = tmp_path / "encoder"
+
+    args = _parser().parse_args(
+        [
+            "--detector",
+            "encoder",
+            "--model-path",
+            str(model_path),
+            "--device",
+            "cpu",
+            "--input",
+            str(tmp_path / "input.jsonl"),
+            "--output",
+            str(tmp_path / "report.json"),
+        ]
+    )
+
+    assert args.detector == "encoder"
+    assert args.model_path == model_path
+    assert args.device == "cpu"
+
+
+def test_encoder_requires_model_path() -> None:
+    """Encoder evaluation should fail clearly without model weights."""
+
+    with pytest.raises(ValueError, match="--model-path"):
+        _build_detector("encoder", None, None)

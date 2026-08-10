@@ -7,7 +7,12 @@ from pii_scrub.text.alignment import (
     validate_label_mapping,
 )
 from pii_scrub.text.replacement import ReplacementResult, RestoreEntry, replace_spans, restore_text
-from pii_scrub.text.spans import aligned_labels_to_spans, bio_tags_to_spans, parse_bio_label
+from pii_scrub.text.spans import (
+    aligned_labels_to_spans,
+    bio_tags_to_spans,
+    parse_bio_label,
+    token_predictions_to_spans,
+)
 from pii_scrub.text.windows import (
     merge_window_predictions,
     remove_exact_duplicates,
@@ -35,5 +40,6 @@ __all__ = [
     "resolve_cross_type_overlaps",
     "resolve_same_type_overlaps",
     "restore_text",
+    "token_predictions_to_spans",
     "validate_label_mapping",
 ]

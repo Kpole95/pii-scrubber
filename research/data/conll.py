@@ -9,7 +9,19 @@ from research.data.models import DatasetExample
 
 SOURCE: Final = "conll2003"
 
-TAG_BY_ID: Final = {
+NER_TAG_BY_ID: Final = {
+    0: "O",
+    1: "B-PER",
+    2: "I-PER",
+    3: "B-ORG",
+    4: "I-ORG",
+    5: "B-LOC",
+    6: "I-LOC",
+    7: "B-MISC",
+    8: "I-MISC",
+}
+
+LEGACY_TAG_BY_ID: Final = {
     0: "O",
     1: "B-ORG",
     2: "B-MISC",
@@ -20,6 +32,8 @@ TAG_BY_ID: Final = {
     7: "I-MISC",
     8: "I-LOC",
 }
+
+VALID_TAGS: Final = frozenset(NER_TAG_BY_ID.values())
 
 ATTACH_LEFT: Final = {
     ".",
@@ -89,12 +103,17 @@ def _tokens(record: Mapping[str, Any]) -> Sequence[str]:
 
 
 def _tags(record: Mapping[str, Any]) -> tuple[str, ...]:
-    """Convert numeric or textual CoNLL tags into tag names.
+    """Return validated CoNLL named-entity tags.
 
-    Example:
-        ``[3, 4, 0]`` becomes ``("B-PER", "I-PER", "O")``.
+    Standard Hugging Face rows use ``ner_tags``. Legacy project rows may use
+    the older ``tags`` numeric ordering.
     """
-    values = record.get("tags")
+    if "ner_tags" in record:
+        values = record.get("ner_tags")
+        tag_by_id = NER_TAG_BY_ID
+    else:
+        values = record.get("tags")
+        tag_by_id = LEGACY_TAG_BY_ID
 
     if not isinstance(values, Sequence) or isinstance(values, str):
         raise TypeError("tags must be a sequence")
@@ -106,13 +125,13 @@ def _tags(record: Mapping[str, Any]) -> tuple[str, ...]:
             raise TypeError("tags must contain integers or strings")
 
         if isinstance(value, int):
-            if value not in TAG_BY_ID:
+            if value not in tag_by_id:
                 raise ValueError(f"unsupported CoNLL tag ID: {value}")
-            tags.append(TAG_BY_ID[value])
+            tags.append(tag_by_id[value])
             continue
 
         tag = value.strip().upper() if isinstance(value, str) else ""
-        if tag not in TAG_BY_ID.values():
+        if tag not in VALID_TAGS:
             raise ValueError(f"unsupported CoNLL tag: {value!r}")
         tags.append(tag)
 

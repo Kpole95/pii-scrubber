@@ -1,4 +1,4 @@
-"""Run one baseline evaluation from CLI arguments."""
+"""Run one detector evaluation from CLI arguments."""
 
 from argparse import ArgumentParser
 from collections.abc import Callable, Sequence
@@ -7,12 +7,14 @@ from pathlib import Path
 from datasets import load_dataset
 
 from pii_scrub.detectors.base import Detector
+from pii_scrub.detectors.encoder import EncoderDetector
 from pii_scrub.detectors.presidio import PresidioDetector
 from pii_scrub.detectors.regex import RegexDetector
 from research.data.artifacts import load_dataset_split
 from research.data.conll import load_conll2003_record
 from research.data.models import DatasetExample
 from research.data.ood_io import load_ood_jsonl
+from research.eval.encoder import load_encoder_predictor
 from research.eval.report_io import write_report
 from research.eval.run_baseline import evaluate_baseline
 
@@ -28,24 +30,40 @@ def main() -> None:
     Example:
         ``python -m scripts.run_evaluation --detector regex ...``
     """
+
     args = _parser().parse_args()
-
-    detector = DETECTORS[args.detector]()
-    examples = _load_examples(
-        args.dataset,
-        args.input,
-        args.split,
-        args.data_file,
-    )
-
-    report = evaluate_baseline(
-        detector,
-        examples,
-    )
+    detector = _build_detector(args.detector, args.model_path, args.device)
+    examples = _load_examples(args.dataset, args.input, args.split, args.data_file)
+    entities = {"PERSON"} if args.dataset == "conll" else None
 
     write_report(
-        report,
+        evaluate_baseline(detector, examples, entities=entities),
         args.output,
+    )
+
+
+def _build_detector(
+    name: str,
+    model_path: Path | None,
+    device: str | None,
+) -> Detector:
+    """Build one configured detector for evaluation.
+
+    Example:
+        ``_build_detector("regex", None, None)`` creates ``RegexDetector``.
+    """
+
+    if name != "encoder":
+        return DETECTORS[name]()
+
+    if model_path is None:
+        raise ValueError("--model-path is required for the encoder detector")
+
+    return EncoderDetector(
+        load_encoder_predictor(
+            model_path,
+            device=device,
+        )
     )
 
 
@@ -56,27 +74,23 @@ def _load_examples(
     data_file: str | None,
 ) -> Sequence[DatasetExample]:
     """Load normalized examples for one supported source."""
+
     if dataset == "ood":
         if path is None:
             raise ValueError("--input is required for OOD")
-
         return load_ood_jsonl(path)
 
     if dataset == "artifact":
         if path is None:
             raise ValueError("--input is required for artifact datasets")
-
         if split is None:
             raise ValueError("--split is required for artifact datasets")
 
         artifact = load_dataset_split(path)
-
         if split == "train":
             return artifact.split.train
-
         if split == "validation":
             return artifact.split.validation
-
         return artifact.split.test
 
     if data_file is None:
@@ -87,19 +101,18 @@ def _load_examples(
         data_files=data_file,
         split=split or "train",
     )
-
     return tuple(load_conll2003_record(row) for row in rows)
 
 
 def _parser() -> ArgumentParser:
-    """Build the baseline evaluation CLI parser."""
-    parser = ArgumentParser(
-        description="Run one PII baseline evaluation.",
-    )
+    """Build the detector evaluation CLI parser."""
 
+    parser = ArgumentParser(
+        description="Run one PII detector evaluation.",
+    )
     parser.add_argument(
         "--detector",
-        choices=tuple(DETECTORS),
+        choices=(*DETECTORS, "encoder"),
         required=True,
     )
     parser.add_argument(
@@ -123,6 +136,14 @@ def _parser() -> ArgumentParser:
     parser.add_argument(
         "--input",
         type=Path,
+    )
+    parser.add_argument(
+        "--model-path",
+        type=Path,
+    )
+    parser.add_argument(
+        "--device",
+        type=str,
     )
 
     return parser

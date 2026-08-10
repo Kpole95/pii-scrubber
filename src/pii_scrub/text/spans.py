@@ -3,7 +3,7 @@
 from collections.abc import Sequence
 from typing import Literal
 
-from pii_scrub.types import AlignedExample, CharacterSpan
+from pii_scrub.types import AlignedExample, CharacterSpan, DetectedSpan, Offset
 
 BioPrefix = Literal["B", "I", "O"]
 
@@ -110,5 +110,84 @@ def aligned_labels_to_spans(example: AlignedExample) -> list[CharacterSpan]:
             )
         else:
             active = (active[0], end, active[2], word_id)
+    close()
+    return spans
+
+
+def token_predictions_to_spans(
+    offsets: Sequence[Offset],
+    labels: Sequence[str],
+    scores: Sequence[float] | None = None,
+) -> list[DetectedSpan]:
+    """Decode model BIO predictions into scored character spans.
+
+    Invalid ``I`` transitions start a new entity instead of crashing inference.
+    Zero-length offsets from special or padding tokens are ignored. When token
+    probabilities are supplied, each span receives their arithmetic mean.
+
+    Example:
+        ``B-PERSON`` + ``I-PERSON`` over ``[5, 8)`` and ``[8, 11)`` becomes
+        ``DetectedSpan(5, 11, "PERSON", score=...)``.
+    """
+
+    if len(offsets) != len(labels):
+        raise ValueError("offsets and labels must contain the same number of items")
+    if scores is not None and len(scores) != len(labels):
+        raise ValueError("scores and labels must contain the same number of items")
+
+    spans: list[DetectedSpan] = []
+    active: tuple[int, int, str, list[float]] | None = None
+
+    def close() -> None:
+        nonlocal active
+        if active is not None:
+            start, end, entity_type, probabilities = active
+            score = sum(probabilities) / len(probabilities) if probabilities else None
+            spans.append(DetectedSpan(start, end, entity_type, score))
+        active = None
+
+    for index, (offset, label) in enumerate(zip(offsets, labels, strict=True)):
+        if (
+            not isinstance(offset, tuple)
+            or len(offset) != 2
+            or any(isinstance(value, bool) or not isinstance(value, int) for value in offset)
+        ):
+            raise TypeError(f"offset at index {index} must contain two integers")
+
+        start, end = offset
+        if start < 0 or end < start:
+            raise ValueError(f"offset at index {index} is invalid")
+
+        probability = None if scores is None else scores[index]
+        if probability is not None:
+            if isinstance(probability, bool) or not isinstance(probability, int | float):
+                raise TypeError(f"score at index {index} must be a number")
+            probability = float(probability)
+            if not 0.0 <= probability <= 1.0:
+                raise ValueError(f"score at index {index} must be between 0 and 1")
+
+        prefix, entity_type = parse_bio_label(label)
+
+        if start == end:
+            continue
+
+        if prefix == "O":
+            close()
+            continue
+
+        token_scores = [] if probability is None else [probability]
+
+        if prefix == "B" or active is None or entity_type != active[2]:
+            close()
+            active = (start, end, entity_type or "", token_scores)
+            continue
+
+        active = (
+            min(active[0], start),
+            max(active[1], end),
+            active[2],
+            [*active[3], *token_scores],
+        )
+
     close()
     return spans

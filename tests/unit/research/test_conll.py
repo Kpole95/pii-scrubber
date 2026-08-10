@@ -6,12 +6,13 @@ from pii_scrub.types import CharacterSpan
 from research.data.conll import load_conll2003_record
 
 
-def test_loads_multi_token_person() -> None:
-    """B-PER/I-PER should become one PERSON character span."""
+def test_loads_standard_huggingface_person_tags() -> None:
+    """Standard Hugging Face B-PER/I-PER IDs should become PERSON."""
+
     result = load_conll2003_record(
         {
             "tokens": ["Peter", "Blackburn", "visited", "London", "."],
-            "tags": [3, 4, 0, 5, 0],
+            "ner_tags": [1, 2, 0, 5, 0],
         }
     )
 
@@ -19,24 +20,39 @@ def test_loads_multi_token_person() -> None:
     assert result.spans == (CharacterSpan(0, 15, "PERSON"),)
 
 
-def test_ignores_non_person_entities() -> None:
-    """ORG and LOC tags should not become PII spans."""
+def test_standard_huggingface_org_tags_are_not_person() -> None:
+    """Standard B-ORG/I-ORG IDs must not be interpreted as PERSON."""
+
     result = load_conll2003_record(
         {
             "tokens": ["European", "Commission", "in", "Brussels", "."],
-            "tags": [1, 6, 0, 5, 0],
+            "ner_tags": [3, 4, 0, 5, 0],
         }
     )
 
     assert result.spans == ()
 
 
+def test_supports_legacy_project_tag_ids() -> None:
+    """Legacy project rows should retain their historical numeric mapping."""
+
+    result = load_conll2003_record(
+        {
+            "tokens": ["Peter", "Blackburn"],
+            "tags": [3, 4],
+        }
+    )
+
+    assert result.spans == (CharacterSpan(0, 15, "PERSON"),)
+
+
 def test_detokenizes_punctuation() -> None:
     """Punctuation should attach without unnecessary spaces."""
+
     result = load_conll2003_record(
         {
             "tokens": ["John", "'s", "team", "won", "."],
-            "tags": [3, 0, 0, 0, 0],
+            "ner_tags": [1, 0, 0, 0, 0],
         }
     )
 
@@ -46,10 +62,11 @@ def test_detokenizes_punctuation() -> None:
 
 def test_recovers_orphan_i_person() -> None:
     """A leading I-PER should start a recoverable PERSON span."""
+
     result = load_conll2003_record(
         {
             "tokens": ["John", "Smith"],
-            "tags": [4, 4],
+            "ner_tags": [2, 2],
         }
     )
 
@@ -58,10 +75,11 @@ def test_recovers_orphan_i_person() -> None:
 
 def test_rejects_unknown_tag() -> None:
     """Unknown tag IDs should fail instead of being silently ignored."""
+
     with pytest.raises(ValueError, match="unsupported CoNLL tag ID"):
         load_conll2003_record(
             {
                 "tokens": ["John"],
-                "tags": [99],
+                "ner_tags": [99],
             }
         )
