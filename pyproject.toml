@@ -17,6 +17,7 @@ ml = [
     "sentencepiece>=0.2",
     "protobuf>=5",
     "accelerate>=1.1",
+    "peft>=0.18",
 ]
 presidio = [
     "presidio-analyzer>=2.2",

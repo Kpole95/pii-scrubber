@@ -1632,6 +1632,27 @@ wheels = [
 ]
 
 [[package]]
+name = "peft"
+version = "0.20.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "accelerate" },
+    { name = "huggingface-hub" },
+    { name = "numpy" },
+    { name = "packaging" },
+    { name = "psutil" },
+    { name = "pyyaml" },
+    { name = "safetensors" },
+    { name = "torch" },
+    { name = "tqdm" },
+    { name = "transformers" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/b4/08/02541a2c29be7c78698f73d438bc0e733b214f3f35ec5db79fca8da8fc61/peft-0.20.0.tar.gz", hash = "sha256:4769c8093a4ca145fd6fb3fd4dd50449675f5fe46434ad1e98b285a132d4b1d0", size = 880503, upload-time = "2026-07-28T13:46:01.85Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/28/79/13bcabb8048126422d5c4b880575d40886c726f354db88cfeed4325525bb/peft-0.20.0-py3-none-any.whl", hash = "sha256:0fbba16ffebfad3de96e06f2da6860fd860292324b85b6141909fa1e26ea9233", size = 775777, upload-time = "2026-07-28T13:45:59.809Z" },
+]
+
+[[package]]
 name = "phonenumbers"
 version = "9.0.36"
 source = { registry = "https://pypi.org/simple" }
@@ -1654,6 +1675,7 @@ dev = [
 ]
 ml = [
     { name = "accelerate" },
+    { name = "peft" },
     { name = "protobuf" },
     { name = "sentencepiece" },
     { name = "torch" },
@@ -1674,6 +1696,7 @@ requires-dist = [
     { name = "datasets", marker = "extra == 'research'", specifier = ">=3.2" },
     { name = "en-core-web-lg", marker = "extra == 'presidio'", url = "https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl" },
     { name = "mypy", marker = "extra == 'dev'", specifier = ">=1.14" },
+    { name = "peft", marker = "extra == 'ml'", specifier = ">=0.18" },
     { name = "presidio-analyzer", marker = "extra == 'presidio'", specifier = ">=2.2" },
     { name = "protobuf", marker = "extra == 'ml'", specifier = ">=5" },
     { name = "pytest", marker = "extra == 'dev'", specifier = ">=8.3" },
