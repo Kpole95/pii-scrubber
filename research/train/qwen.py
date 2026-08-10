@@ -93,6 +93,7 @@ def main() -> None:
     )
 
     if config["gradient_checkpointing"]:
+        model.enable_input_require_grads()
         model.gradient_checkpointing_enable()
         model.config.use_cache = False
 
