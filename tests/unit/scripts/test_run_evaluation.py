@@ -103,3 +103,33 @@ def test_encoder_requires_model_path() -> None:
 
     with pytest.raises(ValueError, match="--model-path"):
         _build_detector("encoder", None, None)
+
+
+def test_parser_accepts_person_merge_ablation(tmp_path: Path) -> None:
+    """Encoder evaluation should accept the split-span merge ablation."""
+
+    args = _parser().parse_args(
+        [
+            "--detector",
+            "encoder",
+            "--model-path",
+            str(tmp_path / "encoder"),
+            "--merge-person-fragments",
+            "--output",
+            str(tmp_path / "report.json"),
+        ]
+    )
+
+    assert args.merge_person_fragments is True
+
+
+def test_non_encoder_rejects_person_merge_ablation() -> None:
+    """The merge ablation should not apply to non-encoder detectors."""
+
+    with pytest.raises(ValueError, match="supported only for encoder"):
+        _build_detector(
+            "regex",
+            None,
+            None,
+            merge_person_fragments=True,
+        )

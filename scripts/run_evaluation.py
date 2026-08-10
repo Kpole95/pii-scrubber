@@ -14,6 +14,7 @@ from research.data.artifacts import load_dataset_split
 from research.data.conll import load_conll2003_record
 from research.data.models import DatasetExample
 from research.data.ood_io import load_ood_jsonl
+from research.eval.ablation import wrap_merge_ablation
 from research.eval.encoder import load_encoder_predictor
 from research.eval.report_io import write_report
 from research.eval.run_baseline import evaluate_baseline
@@ -32,7 +33,12 @@ def main() -> None:
     """
 
     args = _parser().parse_args()
-    detector = _build_detector(args.detector, args.model_path, args.device)
+    detector = _build_detector(
+        args.detector,
+        args.model_path,
+        args.device,
+        merge_person_fragments=args.merge_person_fragments,
+    )
     examples = _load_examples(args.dataset, args.input, args.split, args.data_file)
     entities = {"PERSON"} if args.dataset == "conll" else None
 
@@ -46,6 +52,8 @@ def _build_detector(
     name: str,
     model_path: Path | None,
     device: str | None,
+    *,
+    merge_person_fragments: bool = False,
 ) -> Detector:
     """Build one configured detector for evaluation.
 
@@ -54,17 +62,25 @@ def _build_detector(
     """
 
     if name != "encoder":
+        if merge_person_fragments:
+            raise ValueError("--merge-person-fragments is supported only for encoder")
         return DETECTORS[name]()
 
     if model_path is None:
         raise ValueError("--model-path is required for the encoder detector")
 
-    return EncoderDetector(
-        load_encoder_predictor(
-            model_path,
-            device=device,
-        )
+    predictor = load_encoder_predictor(
+        model_path,
+        device=device,
     )
+
+    if merge_person_fragments:
+        predictor = wrap_merge_ablation(
+            predictor,
+            entity_types={"PERSON"},
+        )
+
+    return EncoderDetector(predictor)
 
 
 def _load_examples(
@@ -144,6 +160,11 @@ def _parser() -> ArgumentParser:
     parser.add_argument(
         "--device",
         type=str,
+    )
+    parser.add_argument(
+        "--merge-person-fragments",
+        action="store_true",
+        help="Merge encoder spans separated only by non-alphanumeric text.",
     )
 
     return parser
