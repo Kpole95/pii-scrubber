@@ -4,20 +4,24 @@ PII Scrubber is a local-first Python library and CLI that detects and replaces p
 
 ## Current status
 
-The repository currently contains the completed **Milestone 1 foundation**:
+The repository currently contains the completed **Milestone 1 foundation through Stage 12**:
 
 - strict BIO and subword alignment with document-global offsets;
 - exact character-span reconstruction and overlapping-window merging;
 - normalized Ai4Privacy and CoNLL-2003 benchmark adapters;
 - deterministic splits, JSONL artifacts, manifests, and statistics;
-- a fixed 200-example hand-labeled real/OOD benchmark;
-- reversible replacement plus a functional regex-backed API and CLI;
-- regex and Microsoft Presidio baseline evaluation across all three benchmarks;
-- leak rate, exact/partial span F1, per-entity recall, over-redaction, and ECE;
-- a reproducible baseline runner and Markdown comparison report;
-- 329 offline tests.
+- a fixed 200-example hand-labeled OOD benchmark;
+- reversible replacement plus regex, Presidio, and encoder detector support;
+- leak rate, exact/partial span F1, per-entity recall, over-redaction, and calibration metrics;
+- trained DeBERTa-v3-base encoder evaluation across Ai4Privacy, OOD, and CoNLL;
+- trained Qwen2.5-1.5B LoRA evaluation with strict JSON span parsing;
+- validation-only encoder calibration with frozen `balanced` and `strict` threshold profiles;
+- runtime `recall_mode` support for the frozen profiles;
+- 464 offline tests.
 
-Encoder and generative training loops are not implemented yet. Empty model-training files would create false progress, so those modules should be added only with executable behaviour and tests.
+The encoder is the selected primary model family. It has substantially lower leak rate and higher exact-span F1 than the Qwen model across all three frozen benchmarks. Qwen shows useful semantic recognition through partial-span scores, but exact offsets and structured-output reliability are not strong enough for the scrubber's primary detection path.
+
+Threshold profiles were selected only on the Ai4Privacy validation split. Final Ai4Privacy test, OOD, and CoNLL measurements are reported without test-set retuning. The raw encoder currently has the lowest observed leak rate on all three final benchmarks, while the frozen profiles remain available as explicit runtime policy choices.
 
 ## Install
 
@@ -47,7 +51,7 @@ print(result.text)
 assert Scrubber.restore(result.text, result.mapping) == text
 ```
 
-The default detector is the regex baseline. Production use with names and contextual entities requires the later encoder or Presidio detector.
+The default detector is the regex baseline. The trained encoder and Presidio integrations provide broader detection for names and contextual entities.
 
 ## CLI usage
 
@@ -73,7 +77,7 @@ pii-scrubber/
 ├── research/                   never imported by the runtime package
 │   ├── data/                   dataset normalization, splits, artifacts
 │   ├── eval/                   span-level metrics
-│   ├── train/                  added when training loops are implemented
+│   ├── train/                  encoder and Qwen training pipelines
 │   ├── labeled_ood/            hand-labeled real-text test set
 │   └── results/                reproducible generated evaluation reports
 ├── scripts/                    repository and experiment entry points
