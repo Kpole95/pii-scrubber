@@ -171,7 +171,7 @@ def _training_arguments(
         "gradient_accumulation_steps": config["gradient_accumulation_steps"],
         "learning_rate": config["learning_rate"],
         "weight_decay": config["weight_decay"],
-        "warmup_ratio": config["warmup_ratio"],
+        "warmup_steps": config["warmup_ratio"],
         "num_train_epochs": config["epochs"],
         "logging_strategy": "steps",
         "logging_steps": 1 if diagnostic else config["logging_steps"],
