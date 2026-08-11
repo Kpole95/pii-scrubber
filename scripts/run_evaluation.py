@@ -71,8 +71,8 @@ def _build_detector(
     model_path: Path | None,
     device: str | None,
     *,
-    base_model: str,
-    max_new_tokens: int,
+    base_model: str = "Qwen/Qwen2.5-1.5B-Instruct",
+    max_new_tokens: int = 256,
     merge_person_fragments: bool = False,
 ) -> Detector:
     """Build one configured detector for evaluation."""
