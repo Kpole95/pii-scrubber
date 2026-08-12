@@ -1,0 +1,31 @@
+# tests / unit / research / data
+
+Unit tests for research dataset loading, normalization, artifacts, splits, and statistics.
+
+## Files
+
+- `__init__.py` — Data research unit tests. Main defs/classes: No top-level defs or classes.
+- `test_ai4privacy.py` — Tests for the canonical Ai4Privacy dataset adapter. Main defs/classes: `test_loads_supported_pii`, `test_ignores_out_of_scope_label`, `test_accepts_json_privacy_mask`, `test_rejects_bad_offsets`, `test_rejects_unknown_label`.
+- `test_artifacts.py` — Tests for complete normalized dataset artifacts. Main defs/classes: `_make_example`, `_make_split`, `test_save_dataset_split_creates_all_files`, `test_save_and_load_dataset_split_round_trip`, `test_manifest_json_contains_expected_metadata`, `test_dataset_manifest_round_trip`, plus 6 more tests.
+- `test_conll.py` — Tests for the CoNLL-2003 PERSON-only dataset adapter. Main defs/classes: `test_loads_standard_huggingface_person_tags`, `test_standard_huggingface_org_tags_are_not_person`, `test_supports_legacy_project_tag_ids`, `test_detokenizes_punctuation`, `test_recovers_orphan_i_person`, `test_rejects_unknown_tag`.
+- `test_exports.py` — Tests for the public research-data API. Main defs/classes: `test_exports_stage4_adapters`, `test_exports_existing_data_tools`.
+- `test_gretel.py` — Tests for the Gretel Finance dataset adapter. Main defs/classes: `_record`, `test_normalizes_gretel_record`, `test_accepts_decoded_spans`, `test_allows_empty_spans`, `test_rejects_missing_field`, `test_rejects_invalid_json`, plus 2 more tests.
+- `test_huggingface.py` — Tests for Hugging Face dataset acquisition. Main defs/classes: `test_loads_records`, `test_passes_config`, `test_rejects_empty_inputs`.
+- `test_loaders.py` — Tests for shared dataset batch-loading behavior. Main defs/classes: `_openpii`, `test_openpii_batch_reports_bad_rows`, `test_strict_mode_raises`, `test_ai4privacy_batch_uses_shared_loader`, `test_conll_batch_uses_shared_loader`, `test_gretel_batch_uses_shared_loader`, plus 2 more tests.
+- `test_models.py` — Tests for normalized dataset data models. Main defs/classes: `test_dataset_example_stores_normalized_record`, `test_dataset_example_allows_no_entities`, `test_dataset_example_rejects_empty_id`, `test_dataset_example_rejects_empty_text`, `test_dataset_example_requires_tuple_spans`, `test_dataset_example_rejects_span_beyond_text`, plus 7 more tests.
+- `test_normalization.py` — Tests for dataset entity-label normalization. Main defs/classes: `test_normalize_entity_label_maps_person_labels`, `test_normalize_entity_label_maps_email_labels`, `test_normalize_entity_label_maps_phone_labels`, `test_normalize_entity_label_maps_common_labels`, `test_normalize_entity_label_strips_whitespace`, `test_normalize_entity_label_rejects_unknown_label`, plus 3 more tests.
+- `test_ood.py` — Tests for the manually labeled OOD dataset adapter. Main defs/classes: `test_loads_ood_record`, `test_allows_negative_example`, `test_sorts_spans`, `test_rejects_span_beyond_text`, `test_rejects_missing_field`.
+- `test_ood_dataset.py` — Tests for the checked-in hand-labeled OOD dataset. Main defs/classes: `test_ood_dataset_loads`, `test_ood_dataset_ids_are_unique`, `test_ood_dataset_contains_negative_examples`, `test_ood_dataset_contains_pii`, `test_ood_dataset_is_complete`.
+- `test_ood_io.py` — Tests for OOD JSONL loading. Main defs/classes: `test_loads_jsonl`, `test_skips_blank_lines`, `test_reports_bad_line_number`, `test_rejects_missing_file`.
+- `test_ood_stats.py` — Tests for OOD benchmark summaries and validation. Main defs/classes: `_example`, `test_summarizes_ood_dataset`, `test_rejects_duplicate_ids`, `test_rejects_more_than_target`, `test_allows_dataset_under_construction`, `test_complete_ood_requires_target`, plus 1 more test.
+- `test_openpii.py` — Tests for the OpenPII dataset adapter. Main defs/classes: `_record`, `test_normalizes_openpii_record`, `test_allows_string_id_and_empty_annotations`, `test_sorts_annotations`, `test_rejects_missing_record_field`, `test_rejects_missing_annotation_field`, plus 2 more tests.
+- `test_sampling.py` — Tests for deterministic dataset sampling. Main defs/classes: `_make_examples`, `_example_ids`, `test_sample_examples_returns_requested_size`, `test_sample_examples_is_deterministic`, `test_sample_examples_changes_with_seed`, `test_sample_examples_does_not_modify_input`, plus 2 more tests.
+- `test_serialization.py` — Tests for normalized dataset JSONL serialization. Main defs/classes: `_make_example`, `test_dataset_example_to_dict_creates_json_data`, `test_dataset_example_from_dict_restores_example`, `test_write_and_read_dataset_jsonl_round_trip`, `test_write_dataset_jsonl_preserves_unicode`, `test_write_dataset_jsonl_uses_one_line_per_example`, plus 2 more tests.
+- `test_serialization_errors.py` — Validation tests for normalized dataset JSONL serialization. Main defs/classes: `_make_example`, `test_read_dataset_jsonl_rejects_invalid_json`, `test_read_dataset_jsonl_rejects_empty_line`, `test_read_dataset_jsonl_reports_invalid_example_line`, `test_read_dataset_jsonl_rejects_missing_file`, `test_dataset_example_from_dict_requires_span_list`, plus 2 more tests.
+- `test_splitting.py` — Tests for deterministic dataset splitting. Main defs/classes: `_make_examples`, `_example_ids`, `test_split_examples_returns_expected_counts`, `test_split_examples_is_deterministic`, `test_split_examples_contains_no_overlap`, `test_split_examples_preserves_every_example`, plus 5 more tests.
+- `test_statistics.py` — Tests for normalized dataset statistics. Main defs/classes: `_make_examples`, `test_calculate_dataset_statistics_counts_examples`, `test_calculate_dataset_statistics_counts_entities`, `test_calculate_dataset_statistics_counts_sources`, `test_calculate_dataset_statistics_counts_languages`, `test_calculate_dataset_statistics_measures_text_length`, plus 4 more tests.
+- `test_taxonomy.py` — Tests for source-label taxonomy completeness. Main defs/classes: `test_openpii_contains_19_labels`, `test_gretel_finance_contains_29_labels`, `test_default_mapping_covers_every_openpii_label`, `test_default_mapping_covers_every_gretel_label`, `test_audit_reports_missing_label`, `test_audit_reports_invalid_normalized_target`, plus 2 more tests.
+
+## Notes
+
+Keep this guide short. Update it when files move, are added, or change responsibility.

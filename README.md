@@ -75,6 +75,8 @@ scripts/            experiment and repository commands
 tests/              unit, contract, and integration tests
 ```
 
+Each main folder has a short `README.md` that explains its files and important definitions.
+
 The runtime package never imports `research`. Research code may use the runtime package, but not the other way around.
 
 ## Main results
