@@ -4,7 +4,7 @@ PII Scrubber is a local Python library and CLI for finding and replacing persona
 
 The repository also contains the research code used to compare rules, Microsoft Presidio, a DeBERTa encoder, and a Qwen LoRA model using the same span-level metrics.
 
-The main research result is simple: **the DeBERTa encoder is the strongest model in this study**. It gives a much lower leak rate and much better exact span accuracy than the Qwen model on the frozen evaluation sets.
+The main research result is more specific: **DeBERTa is the selected primary learned model and leads the Ai4Privacy and hand-labeled OOD comparisons**. Presidio remains stronger on the canonical CoNLL PERSON benchmark, where annotation conventions differ substantially from Ai4Privacy.
 
 ## What it does
 
@@ -12,9 +12,9 @@ The main research result is simple: **the DeBERTa encoder is the strongest model
 - replaces detected spans with typed placeholders;
 - keeps a restoration map so text can be restored by the caller;
 - preserves document-level character offsets through tokenization and windows;
-- supports regex, Presidio, encoder, and generative detector adapters;
+- supports a regex runtime default plus Presidio, DeBERTa encoder, and generative detector adapters; DeBERTa is the primary learned model, while Qwen is a research comparison;
 - evaluates leak rate, exact span F1, partial span F1, per-entity recall, and over-redaction;
-- includes a 200-example hand-labeled OOD benchmark;
+- includes a 200-example hand-labeled OOD benchmark under [`research/labeled_ood/`](research/labeled_ood/);
 - includes calibration, threshold-profile, robustness, and memorization audits.
 
 The base runtime has no required ML dependency.
@@ -99,7 +99,27 @@ The runtime package never imports `research`. Research code may use the runtime 
 
 ## Main results
 
-The raw DeBERTa encoder is the reference model because it had the lowest final leak rate on all three frozen benchmarks.
+> **Important:** the numbers below are from the separately trained DeBERTa research model. Installing the package does **not** download or enable these weights. `Scrubber()` still uses the regex detector by default.
+
+The trained encoder artifact is kept outside normal Git history. From a source checkout with the ML dependencies installed and a local copy of the trained model, the encoder can be loaded like this:
+
+```python
+from pathlib import Path
+
+from pii_scrub import Scrubber
+from pii_scrub.detectors.encoder import EncoderDetector
+from research.eval.encoder import load_encoder_predictor
+
+predictor = load_encoder_predictor(Path("/path/to/encoder-model"))
+scrubber = Scrubber(detector=EncoderDetector(predictor))
+
+result = scrubber.scrub("Contact Ana at ana@example.com")
+print(result.text)
+```
+
+`load_encoder_predictor(...)` is the raw model path used by the research evaluation. Wrapping it in `Scrubber` applies the runtime threshold policy. The model-loading helper lives in the repository research code; the published runtime package does not bundle the trained weights.
+
+The table below reports the **raw DeBERTa encoder**, before calibrated runtime profile filtering:
 
 | Dataset | Exact F1 | Partial F1 | Leak rate | Over-redaction |
 |---|---:|---:|---:|---:|
@@ -107,9 +127,11 @@ The raw DeBERTa encoder is the reference model because it had the lowest final l
 | OOD 200 | 0.4356 | 0.6687 | 0.4873 | 0.0050 |
 | CoNLL PERSON | 0.1689 | 0.6473 | 0.7897 | 0.0050 |
 
-The Qwen2.5-1.5B LoRA model was much weaker on exact spans and leak rate.
+DeBERTa is the primary learned model because it is decisively strongest on Ai4Privacy, edges Presidio on the hand-labeled OOD benchmark, and is much stronger than Qwen on exact spans and leak rate.
 
-Its partial-span scores show that it often identifies the correct area of the text, but its exact offsets and structured output were not reliable enough for the main redaction path.
+CoNLL PERSON is the important exception. Presidio reached **0.7798 exact F1** with a **0.2257 leak rate**, versus **0.1689 exact F1** and **0.7897 leak** for raw DeBERTa. A research-only PERSON-fragment merge raised DeBERTa to **0.7429 exact F1** and **0.2597 leak**, showing that much of the raw CoNLL gap comes from different name-span annotation conventions. That merge is not the production default because it hurts Ai4Privacy exact-span behavior.
+
+The Qwen2.5-1.5B LoRA model was much weaker on exact spans and leak rate. Its partial-span scores show that it often identifies the correct area of the text, but its exact offsets and structured output were not reliable enough for the main redaction path.
 
 See `RESULTS.md` for the full model comparison, calibration results, frozen thresholds, robustness checks, and memorization audit.
 
@@ -121,6 +143,7 @@ The robustness evaluation found one important weakness: **case changes can hurt 
 - uppercasing increased leak rate by 11.34 percentage points;
 - double spaces and non-breaking spaces caused essentially no leak-rate change;
 - 480-word and 560-word prefix stress did not increase OOD leak rate;
+- the OOD curly-apostrophe perturbation increased leak by 12.5 percentage points, but only six examples changed, so this is a warning rather than a broad conclusion;
 - no exact or normalized full-text train duplicates were found in validation, test, or OOD data.
 
 These checks were measured without retraining or retuning thresholds on the final test sets.
