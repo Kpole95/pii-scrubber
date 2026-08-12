@@ -26,12 +26,15 @@ class QwenRecordDataset(Dataset[QwenTrainingRecord]):
     """Small torch Dataset wrapper around prepared Qwen records."""
 
     def __init__(self, records: list[QwenTrainingRecord]) -> None:
+        """Store tokenized records for the training loop."""
         self.records = records
 
     def __len__(self) -> int:
+        """Return the number of stored records."""
         return len(self.records)
 
     def __getitem__(self, index: int) -> QwenTrainingRecord:
+        """Return one stored item by index or key."""
         return self.records[index]
 
 

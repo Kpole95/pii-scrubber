@@ -12,6 +12,7 @@ def _record(
     input_ids: list[int],
     labels: list[int],
 ) -> QwenTrainingRecord:
+    """Build one compact test record."""
     return QwenTrainingRecord(
         input_ids=input_ids,
         attention_mask=[1] * len(input_ids),

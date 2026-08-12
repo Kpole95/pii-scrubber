@@ -65,7 +65,29 @@ def test_predict_spans_with_presidio_detector() -> None:
         language="en",
     )
 
-    result = predict_spans(PresidioDetector(), example)
+    class Result:
+        """Mimic the Presidio result fields used by the adapter."""
+
+        start = 12
+        end = 28
+        entity_type = "EMAIL_ADDRESS"
+        score = 0.99
+
+    class Analyzer:
+        """Return one deterministic Presidio-style result."""
+
+        def analyze(
+            self,
+            *,
+            text: str,
+            language: str,
+            entities: list[str] | None,
+        ) -> list[Result]:
+            """Return the synthetic email result for this test."""
+            assert language == "en"
+            return [Result()]
+
+    result = predict_spans(PresidioDetector(Analyzer()), example)
 
     assert CharacterSpan(12, 28, "EMAIL") in result
 

@@ -10,6 +10,7 @@ from pii_scrub.types import DetectedSpan
 
 
 def test_regex_detector_returns_document_offsets() -> None:
+    """Check that regex detections use document-global offsets."""
     text = "Email ana@example.com or call +44 7700 900123."
     spans = RegexDetector().detect(text)
     assert [span.entity_type for span in spans] == ["EMAIL", "PHONE"]
@@ -17,11 +18,13 @@ def test_regex_detector_returns_document_offsets() -> None:
 
 
 def test_regex_detector_respects_entity_filter() -> None:
+    """Check that regex detection respects entity filtering."""
     spans = RegexDetector().detect("Email ana@example.com", entities={"PHONE"})
     assert spans == []
 
 
 def test_encoder_adapter_sorts_predictions() -> None:
+    """Check that the encoder adapter sorts its predictions."""
     detector = EncoderDetector(
         lambda text, entities: [
             DetectedSpan(10, 14, "PERSON", 0.8),
@@ -32,6 +35,7 @@ def test_encoder_adapter_sorts_predictions() -> None:
 
 
 def test_generative_adapter_parses_json_spans() -> None:
+    """Check that the generative adapter parses JSON spans."""
     detector = GenerativeDetector(
         lambda text: '[{"start": 0, "end": 4, "entity_type": "PERSON", "score": 0.9}]'
     )
@@ -39,6 +43,7 @@ def test_generative_adapter_parses_json_spans() -> None:
 
 
 def test_generative_adapter_rejects_rewritten_text() -> None:
+    """Check that rewritten generative output is rejected."""
     detector = GenerativeDetector(lambda text: '"[PERSON]"')
     with pytest.raises(DetectorError, match="JSON list"):
         detector.detect("John")

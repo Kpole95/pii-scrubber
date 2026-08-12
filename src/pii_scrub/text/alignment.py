@@ -18,11 +18,20 @@ IGNORE_INDEX = -100
 class TokenEncoding(Protocol):
     """Minimal encoding interface required from a fast tokenizer result."""
 
-    def __getitem__(self, key: str) -> Any: ...
+    def __getitem__(self, key: str) -> Any:
+        """Return one stored item by key."""
 
-    def word_ids(self) -> list[int | None] | None: ...
+        ...
 
-    def tokens(self) -> list[str]: ...
+    def word_ids(self) -> list[int | None] | None:
+        """Return tokenizer word identifiers for this encoding."""
+
+        ...
+
+    def tokens(self) -> list[str]:
+        """Return token strings for this encoding."""
+
+        ...
 
 
 class FastTokenizer(Protocol):
@@ -30,7 +39,10 @@ class FastTokenizer(Protocol):
 
     unk_token: str | None
 
-    def __call__(self, words: list[str], **kwargs: Any) -> TokenEncoding: ...
+    def __call__(self, words: list[str], **kwargs: Any) -> TokenEncoding:
+        """Tokenize pre-split words and return encoding metadata."""
+
+        ...
 
 
 def locate_words(text: str, words: Sequence[str]) -> list[WordOffset]:
@@ -190,7 +202,8 @@ def align_bio_to_subwords(
             and prefix != "O"
         ):
             raise ValueError(
-                f"annotated word {words[word_id]!r} at index {word_id} was converted to the unknown token"
+                f"annotated word {words[word_id]!r} at index {word_id} "
+                "was converted to the unknown token"
             )
 
         source = word_offsets[word_id]

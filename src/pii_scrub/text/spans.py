@@ -44,6 +44,7 @@ def bio_tags_to_spans(
     active: tuple[int, int, str] | None = None
 
     def close() -> None:
+        """Close the active entity span when one is open."""
         nonlocal active
         if active is not None:
             spans.append(CharacterSpan(active[0], active[1], active[2]))
@@ -82,6 +83,7 @@ def aligned_labels_to_spans(example: AlignedExample) -> list[CharacterSpan]:
     active: tuple[int, int, str, int | None] | None = None
 
     def close() -> None:
+        """Close the active entity span when one is open."""
         nonlocal active
         if active is not None:
             spans.append(CharacterSpan(active[0], active[1], active[2]))
@@ -139,6 +141,7 @@ def token_predictions_to_spans(
     active: tuple[int, int, str, list[float]] | None = None
 
     def close() -> None:
+        """Close the active entity span when one is open."""
         nonlocal active
         if active is not None:
             start, end, entity_type, probabilities = active

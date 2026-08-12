@@ -6,18 +6,22 @@ from pii_scrub.types import WindowSpan
 
 
 def _sort_key(item: WindowSpan) -> tuple[int, int, str, int]:
+    """Return the stable document-order sort key."""
     return item.span.start, item.span.end, item.span.entity_type, item.window_index
 
 
 def _score(item: WindowSpan) -> float:
+    """Return a comparable confidence score for one prediction."""
     return item.score if item.score is not None else float("-inf")
 
 
 def _overlaps(left: WindowSpan, right: WindowSpan) -> bool:
+    """Return whether two spans overlap."""
     return left.span.start < right.span.end and right.span.start < left.span.end
 
 
 def _validate(predictions: Sequence[WindowSpan]) -> None:
+    """Validate the supplied prediction collection."""
     for item in predictions:
         if not isinstance(item, WindowSpan):
             raise TypeError("predictions must contain only WindowSpan objects")
@@ -43,6 +47,7 @@ def remove_exact_duplicates(predictions: Sequence[WindowSpan]) -> list[WindowSpa
 
 
 def _same_type_rank(item: WindowSpan) -> tuple[float, int, int]:
+    """Return the ranking key for same-type overlap resolution."""
     return _score(item), item.span.length, -item.window_index
 
 
@@ -68,6 +73,7 @@ def resolve_same_type_overlaps(predictions: Sequence[WindowSpan]) -> list[Window
 
 
 def _cross_type_rank(item: WindowSpan) -> tuple[float, int, int, str]:
+    """Return the ranking key for cross-type overlap resolution."""
     inverse_type = "".join(chr(0x10FFFF - ord(char)) for char in item.span.entity_type)
     return _score(item), item.span.length, -item.window_index, inverse_type
 

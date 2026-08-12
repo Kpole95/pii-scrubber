@@ -30,6 +30,7 @@ class DatasetExample:
     language: str
 
     def __post_init__(self) -> None:
+        """Validate normalized text, spans, and source metadata."""
         if not isinstance(self.example_id, str):
             raise TypeError("example_id must be a string")
 
@@ -117,6 +118,7 @@ class RejectedRecord:
     message: str
 
     def __post_init__(self) -> None:
+        """Validate one rejected source-record entry."""
         if isinstance(self.record_index, bool) or not isinstance(self.record_index, int):
             raise TypeError("record_index must be an integer")
 
@@ -148,6 +150,7 @@ class DatasetLoadReport:
     rejected: tuple[RejectedRecord, ...]
 
     def __post_init__(self) -> None:
+        """Validate accepted and rejected record collections."""
         if not isinstance(self.examples, tuple):
             raise TypeError("examples must be a tuple")
 

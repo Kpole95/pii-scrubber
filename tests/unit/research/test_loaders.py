@@ -108,6 +108,7 @@ def test_rejects_invalid_loader_result() -> None:
     """A record loader must return DatasetExample objects."""
 
     def invalid_loader(record: Mapping[str, object]) -> str:
+        """Raise the expected loader failure for this test."""
         return "invalid"
 
     report = load_records(

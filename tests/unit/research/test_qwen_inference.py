@@ -11,6 +11,7 @@ class FakeBatch(dict):
     """Minimal BatchEncoding-like object for inference tests."""
 
     def to(self, _device: object) -> "FakeBatch":
+        """Return this lightweight tensor stub for device moves."""
         return self
 
 

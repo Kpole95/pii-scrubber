@@ -14,6 +14,7 @@ from research.train.qwen_dataset import QwenTrainingRecord
 
 
 def _config() -> dict:
+    """Build the training configuration used by this test."""
     return {
         "seed": 42,
         "learning_rate": 2.0e-4,

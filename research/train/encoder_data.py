@@ -101,6 +101,7 @@ def _word_offsets(
     example: DatasetExample,
     words: tuple[str, ...],
 ) -> tuple[tuple[int, int], ...]:
+    """Return document offsets for each whitespace-delimited word."""
     cursor = 0
     offsets = []
 
@@ -114,6 +115,7 @@ def _word_offsets(
 
 
 def _token_count(words: tuple[str, ...], tokenizer: FastTokenizer) -> int:
+    """Return the token count for one prepared text window."""
     encoding = tokenizer(
         list(words),
         is_split_into_words=True,
@@ -130,6 +132,7 @@ def _largest_end(
     start: int,
     max_length: int,
 ) -> int:
+    """Return the largest safe end position for the current window."""
     end = start + 1
 
     while end <= len(words) and _token_count(words[start:end], tokenizer) <= max_length:
@@ -145,6 +148,7 @@ def _overlap_start(
     end: int,
     overlap: int,
 ) -> int:
+    """Return the next window start while preserving overlap."""
     next_start = end - 1
 
     while next_start > start and _token_count(words[next_start:end], tokenizer) < overlap:
@@ -154,6 +158,7 @@ def _overlap_start(
 
 
 def _bio_label(start: int, end: int, spans: tuple[CharacterSpan, ...]) -> str:
+    """Return the BIO label for one word position."""
     for span in spans:
         if span.start <= start and end <= span.end:
             prefix = "B" if start == span.start else "I"

@@ -112,6 +112,7 @@ def dataset_manifest_from_dict(data: object) -> DatasetManifest:
 
 
 def _directory(value: str | Path) -> Path:
+    """Return the normalized artifact directory path."""
     if not isinstance(value, str | Path):
         raise TypeError("directory must be a string or Path")
     path = Path(value)
@@ -121,6 +122,7 @@ def _directory(value: str | Path) -> Path:
 
 
 def _required_text(data: dict[str, Any], field: str, context: str) -> str:
+    """Read and validate one required text field."""
     if field not in data:
         raise ValueError(f"{context} is missing required field {field!r}")
     value = data[field]
@@ -132,6 +134,7 @@ def _required_text(data: dict[str, Any], field: str, context: str) -> str:
 
 
 def _required_int(data: dict[str, Any], field: str, context: str) -> int:
+    """Read and validate one required integer field."""
     if field not in data:
         raise ValueError(f"{context} is missing required field {field!r}")
     value = data[field]

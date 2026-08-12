@@ -8,6 +8,7 @@ from pii_scrub.types import CharacterSpan
 
 
 def test_replace_and_restore_multiple_entity_types() -> None:
+    """Check replacement and restoration across multiple entity types."""
     text = "Email Ana at ana@example.com."
     result = replace_spans(
         text,
@@ -18,6 +19,7 @@ def test_replace_and_restore_multiple_entity_types() -> None:
 
 
 def test_repeated_values_get_distinct_placeholders() -> None:
+    """Check that repeated values receive distinct placeholders."""
     result = replace_spans(
         "Ana called Ana.",
         [CharacterSpan(0, 3, "PERSON"), CharacterSpan(11, 14, "PERSON")],
@@ -26,6 +28,7 @@ def test_repeated_values_get_distinct_placeholders() -> None:
 
 
 def test_replace_rejects_overlapping_spans() -> None:
+    """Check that replacement rejects overlapping spans."""
     with pytest.raises(InvalidSpanError, match="must not overlap"):
         replace_spans(
             "abcdef",
@@ -34,5 +37,6 @@ def test_replace_rejects_overlapping_spans() -> None:
 
 
 def test_restore_rejects_missing_placeholder() -> None:
+    """Check that restoration rejects a missing placeholder."""
     with pytest.raises(RestoreError, match="exactly once"):
         restore_text("unchanged", [RestoreEntry("[PERSON_1]", "Ana")])

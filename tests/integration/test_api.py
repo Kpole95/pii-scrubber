@@ -7,6 +7,7 @@ from pii_scrub.types import DetectedSpan
 
 
 def test_default_scrubber_redacts_and_restores_structured_pii() -> None:
+    """Check the default scrub-and-restore flow for structured PII."""
     text = "Email ana@example.com."
     result = Scrubber().scrub(text)
     assert result.text == "Email [EMAIL_1]."
@@ -14,6 +15,7 @@ def test_default_scrubber_redacts_and_restores_structured_pii() -> None:
 
 
 def test_scrubber_applies_per_entity_thresholds() -> None:
+    """Check that the API applies per-entity thresholds."""
     detector = EncoderDetector(
         lambda text, entities: [
             DetectedSpan(0, 4, "PERSON", 0.4),

@@ -10,6 +10,7 @@ def test_qwen_detector_parses_generated_spans() -> None:
     """Valid sorted Qwen JSON should become detected spans."""
 
     def generate(_text: str) -> str:
+        """Generate deterministic model output for this call."""
         return (
             '{"spans":['
             '{"start":0,"end":4,"entity_type":"PERSON"},'
@@ -42,6 +43,7 @@ def test_qwen_detector_filters_requested_entities() -> None:
     """Dataset-specific entity filtering should match other detectors."""
 
     def generate(_text: str) -> str:
+        """Generate deterministic model output for this call."""
         return (
             '{"spans":['
             '{"start":0,"end":4,"entity_type":"PERSON"},'
@@ -81,6 +83,7 @@ def test_qwen_detector_rejects_unsorted_output() -> None:
     """Unsorted generated spans should remain a strict parse failure."""
 
     def generate(_text: str) -> str:
+        """Generate deterministic model output for this call."""
         return (
             '{"spans":['
             '{"start":5,"end":9,"entity_type":"EMAIL"},'
@@ -109,6 +112,7 @@ def test_qwen_detector_enforces_known_entity_types() -> None:
     """Optional taxonomy validation should reject unknown labels."""
 
     def generate(_text: str) -> str:
+        """Generate deterministic model output for this call."""
         return '{"spans":[{"start":0,"end":4,"entity_type":"UNKNOWN"}]}'
 
     detector = QwenDetector(

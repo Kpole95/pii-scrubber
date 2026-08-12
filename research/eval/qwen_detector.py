@@ -17,6 +17,7 @@ class QwenDetector:
         *,
         entity_types: set[str] | None = None,
     ) -> None:
+        """Store the generator and reset parse-failure tracking."""
         if not callable(generator):
             raise TypeError("generator must be callable")
 

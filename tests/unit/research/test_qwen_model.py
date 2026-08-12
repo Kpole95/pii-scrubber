@@ -11,6 +11,7 @@ from research.train.qwen_model import (
 
 
 def test_rejects_non_positive_lora_rank() -> None:
+    """Check that LoRA rank must be positive."""
     with pytest.raises(ValueError, match="lora_r must be positive"):
         load_qwen_lora_model(
             "fake-model",
@@ -22,6 +23,7 @@ def test_rejects_non_positive_lora_rank() -> None:
 
 
 def test_rejects_non_positive_lora_alpha() -> None:
+    """Check that LoRA alpha must be positive."""
     with pytest.raises(ValueError, match="lora_alpha must be positive"):
         load_qwen_lora_model(
             "fake-model",
@@ -33,6 +35,7 @@ def test_rejects_non_positive_lora_alpha() -> None:
 
 
 def test_rejects_invalid_lora_dropout() -> None:
+    """Check that invalid LoRA dropout is rejected."""
     with pytest.raises(ValueError, match="between 0 and 1"):
         load_qwen_lora_model(
             "fake-model",
@@ -44,6 +47,7 @@ def test_rejects_invalid_lora_dropout() -> None:
 
 
 def test_rejects_empty_target_modules() -> None:
+    """Check that LoRA target modules cannot be empty."""
     with pytest.raises(ValueError, match="must not be empty"):
         load_qwen_lora_model(
             "fake-model",
@@ -60,6 +64,7 @@ def test_builds_lora_model(
     from_pretrained: MagicMock,
     get_peft_model: MagicMock,
 ) -> None:
+    """Check that the Qwen LoRA model is built correctly."""
     base_model = MagicMock()
     peft_model = MagicMock()
 
@@ -87,6 +92,7 @@ def test_builds_lora_model(
 
 
 def test_counts_trainable_parameters() -> None:
+    """Check that trainable parameter counts are reported correctly."""
     model = MagicMock()
 
     frozen = MagicMock()

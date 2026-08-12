@@ -96,6 +96,7 @@ def load_qwen_generator(
     model.eval()
 
     def generate(text: str) -> str:
+        """Generate deterministic model output for this call."""
         return generate_qwen_output(
             model,
             tokenizer,

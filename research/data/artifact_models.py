@@ -19,6 +19,7 @@ class DatasetManifest:
     format_version: int = DATASET_ARTIFACT_VERSION
 
     def __post_init__(self) -> None:
+        """Validate manifest metadata and split counts."""
         if not isinstance(self.source, str):
             raise TypeError("source must be a string")
         if not self.source.strip():
@@ -54,6 +55,7 @@ class LoadedDatasetArtifact:
     manifest: DatasetManifest
 
     def __post_init__(self) -> None:
+        """Validate the loaded split against its manifest."""
         if not isinstance(self.split, DatasetSplit):
             raise TypeError("split must be a DatasetSplit")
         if not isinstance(self.manifest, DatasetManifest):

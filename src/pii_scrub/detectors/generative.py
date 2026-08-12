@@ -13,6 +13,7 @@ class GenerativeDetector:
     """Parse model-generated JSON spans without allowing text rewriting."""
 
     def __init__(self, generator: Generator) -> None:
+        """Store the injected local generation function."""
         if not callable(generator):
             raise TypeError("generator must be callable")
         self._generator = generator

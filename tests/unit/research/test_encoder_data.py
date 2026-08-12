@@ -12,6 +12,7 @@ from tests.unit.text.conftest import FakeFastTokenizer
 
 
 def _tokenizer() -> FakeFastTokenizer:
+    """Build the tokenizer fake used by encoder-data tests."""
     return FakeFastTokenizer(
         {
             "[UNK]": 0,
@@ -28,6 +29,7 @@ def _tokenizer() -> FakeFastTokenizer:
 
 
 def test_builds_bio_for_multiword_entity() -> None:
+    """Check BIO labels for a multiword entity."""
     example = DatasetExample(
         "one", "Call John Smith today.", (CharacterSpan(5, 15, "PERSON"),), "test", "en"
     )
@@ -38,6 +40,7 @@ def test_builds_bio_for_multiword_entity() -> None:
 
 
 def test_splits_at_entity_boundary() -> None:
+    """Check that encoder windows split at entity boundaries."""
     example = DatasetExample(
         "one", "Email ana@example.com.", (CharacterSpan(6, 21, "EMAIL"),), "test", "en"
     )
@@ -48,6 +51,7 @@ def test_splits_at_entity_boundary() -> None:
 
 
 def test_handles_entity_inside_text_piece() -> None:
+    """Check an entity that appears inside a text piece."""
     example = DatasetExample("one", "User:John!", (CharacterSpan(5, 9, "PERSON"),), "test", "en")
     assert words_and_bio(example) == (
         ("User:", "John", "!"),
@@ -56,6 +60,7 @@ def test_handles_entity_inside_text_piece() -> None:
 
 
 def test_builds_deterministic_label_mapping() -> None:
+    """Check that label mapping is deterministic."""
     examples = (
         DatasetExample("one", "a@b.com", (CharacterSpan(0, 7, "EMAIL"),), "test", "en"),
         DatasetExample("two", "John", (CharacterSpan(0, 4, "PERSON"),), "test", "en"),
@@ -70,6 +75,7 @@ def test_builds_deterministic_label_mapping() -> None:
 
 
 def test_window_example_keeps_short_example_whole() -> None:
+    """Check that short examples stay in one window."""
     example = DatasetExample(
         "one", "Call Murali today.", (CharacterSpan(5, 11, "PERSON"),), "test", "en"
     )
@@ -81,6 +87,7 @@ def test_window_example_keeps_short_example_whole() -> None:
 
 
 def test_window_example_rebases_spans() -> None:
+    """Check that windowed spans are rebased correctly."""
     example = DatasetExample(
         "one",
         "Call Murali today. Call Murali today.",
@@ -94,6 +101,7 @@ def test_window_example_rebases_spans() -> None:
 
 
 def test_window_example_respects_max_length() -> None:
+    """Check that windows respect the maximum token length."""
     example = DatasetExample("one", "Call Murali today. Call Murali today.", (), "test", "en")
     tokenizer = _tokenizer()
     windows = window_example(example, tokenizer, max_length=7, overlap=2)
@@ -104,6 +112,7 @@ def test_window_example_respects_max_length() -> None:
 
 
 def test_prepare_encoder_records_builds_model_inputs() -> None:
+    """Check that encoder records contain the required model inputs."""
     example = DatasetExample(
         "one", "Call Murali today.", (CharacterSpan(5, 11, "PERSON"),), "test", "en"
     )
@@ -123,6 +132,7 @@ def test_prepare_encoder_records_builds_model_inputs() -> None:
 
 
 def test_prepare_encoder_records_windows_long_examples() -> None:
+    """Check that long encoder examples are windowed."""
     example = DatasetExample("one", "Call Murali today. Call Murali today.", (), "test", "en")
 
     records = prepare_encoder_records(

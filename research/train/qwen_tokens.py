@@ -25,7 +25,10 @@ class ChatTokenizer(Protocol):
         *,
         tokenize: bool,
         add_generation_prompt: bool,
-    ) -> str: ...
+    ) -> str:
+        """Render chat messages with the tokenizer chat template."""
+
+        ...
 
     def __call__(
         self,
@@ -33,7 +36,10 @@ class ChatTokenizer(Protocol):
         *,
         add_special_tokens: bool,
         return_offsets_mapping: bool,
-    ) -> TokenizedText: ...
+    ) -> TokenizedText:
+        """Tokenize text and return IDs plus optional offsets."""
+
+        ...
 
 
 def tokenize_qwen_messages(

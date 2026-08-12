@@ -29,6 +29,7 @@ class DatasetStatistics:
     language_counts: Mapping[str, int]
 
     def __post_init__(self) -> None:
+        """Validate aggregate counts and language statistics."""
         integer_fields = (
             ("example_count", self.example_count),
             (

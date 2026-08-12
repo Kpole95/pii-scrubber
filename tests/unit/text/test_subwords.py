@@ -277,7 +277,10 @@ def test_alignment_allows_overlapping_offsets_without_gaps() -> None:
     """SentencePiece-style overlap is valid when all characters are covered."""
 
     class OverlapTokenizer(FakeFastTokenizer):
+        """Provide the OverlapTokenizer test double."""
+
         def __call__(self, words: list[str], **kwargs: object) -> FakeEncoding:
+            """Run the callable interface for this object."""
             encoding = super().__call__(words, **kwargs)
             encoding.data["offset_mapping"] = [(0, 0), (0, 1), (0, 1), (1, 9), (0, 0)]
             encoding._word_ids = [None, 0, 0, 0, None]

@@ -11,6 +11,7 @@ from scripts.run_stage13 import (
 
 
 def _example(example_id: str, text: str, value: str = "Alice") -> DatasetExample:
+    """Build a compact dataset example for this test module."""
     start = text.index(value)
     return DatasetExample(
         example_id,
@@ -22,12 +23,14 @@ def _example(example_id: str, text: str, value: str = "Alice") -> DatasetExample
 
 
 def _alice_predictor(text: str, entities: set[str] | None) -> list[DetectedSpan]:
+    """Return predictable PERSON detections for Alice."""
     start = text.casefold().index("alice")
     span = DetectedSpan(start, start + 5, "PERSON", 0.9)
     return [span] if entities is None or "PERSON" in entities else []
 
 
 def test_transform_example_remaps_offsets_after_expansion() -> None:
+    """Check that text expansion remaps gold offsets correctly."""
     example = _example("one", "Call Alice now")
     changed = transform_example(
         example,
@@ -41,6 +44,7 @@ def test_transform_example_remaps_offsets_after_expansion() -> None:
 
 
 def test_robustness_audit_keeps_perfect_case_under_simple_predictor() -> None:
+    """Check that a stable predictor stays perfect under a simple perturbation."""
     report = robustness_audit(_alice_predictor, (_example("one", "Call Alice - it's fine"),))
 
     baseline = report["baseline"]
@@ -61,6 +65,7 @@ def test_robustness_audit_keeps_perfect_case_under_simple_predictor() -> None:
 
 
 def test_long_context_audit_preserves_shifted_gold() -> None:
+    """Check that long-context prefixes preserve shifted gold spans."""
     report = long_context_audit(_alice_predictor, (_example("one", "Call Alice now"),))
 
     variants = report["variants"]
@@ -74,6 +79,7 @@ def test_long_context_audit_preserves_shifted_gold() -> None:
 
 
 def test_memorization_audit_counts_exact_normalized_and_value_overlap() -> None:
+    """Check exact, normalized, and PII-value overlap counts."""
     train = (_example("train", "Call Alice now"),)
     validation = (_example("val", "Call Alice now"),)
     test = (_example("test", "  CALL  ALICE  NOW  ", value="ALICE"),)

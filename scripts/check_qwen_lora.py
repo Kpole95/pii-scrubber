@@ -44,6 +44,7 @@ def main() -> None:
 
 
 def _parser() -> ArgumentParser:
+    """Build the command-line argument parser."""
     parser = ArgumentParser()
     parser.add_argument(
         "--config",

@@ -40,6 +40,7 @@ def load_openpii_record(record: Mapping[str, Any]) -> DatasetExample:
 
 
 def _parse_annotation(item: object, index: int, text: str) -> CharacterSpan:
+    """Parse one source annotation into a normalized span."""
     if not isinstance(item, Mapping):
         raise TypeError(f"OpenPII annotation at index {index} must be a mapping")
     start = _required_int(item, "start", index)
@@ -49,7 +50,8 @@ def _parse_annotation(item: object, index: int, text: str) -> CharacterSpan:
     span = CharacterSpan(start, end, normalize_entity_label(label))
     if span.end > len(text):
         raise ValueError(
-            f"OpenPII annotation at index {index} ends at {span.end}, beyond text length {len(text)}"
+            "OpenPII annotation at "
+            f"index {index} ends at {span.end}, beyond text length {len(text)}"
         )
     extracted = span.extract(text)
     if extracted != value:
@@ -61,6 +63,7 @@ def _parse_annotation(item: object, index: int, text: str) -> CharacterSpan:
 
 
 def _required_text(record: Mapping[str, Any], field: str) -> str:
+    """Read and validate one required text field."""
     if field not in record:
         raise ValueError(f"OpenPII record is missing required field {field!r}")
     value = record[field]
@@ -72,6 +75,7 @@ def _required_text(record: Mapping[str, Any], field: str) -> str:
 
 
 def _required_identifier(record: Mapping[str, Any], field: str) -> str:
+    """Read and validate one required record identifier."""
     if field not in record:
         raise ValueError(f"OpenPII record is missing required field {field!r}")
     value = record[field]
@@ -84,6 +88,7 @@ def _required_identifier(record: Mapping[str, Any], field: str) -> str:
 
 
 def _required_annotation_text(item: Mapping[str, Any], field: str, index: int) -> str:
+    """Read and validate one annotation text value."""
     if field not in item:
         raise ValueError(f"OpenPII annotation at index {index} is missing field {field!r}")
     value = item[field]
@@ -95,6 +100,7 @@ def _required_annotation_text(item: Mapping[str, Any], field: str, index: int) -
 
 
 def _required_int(item: Mapping[str, Any], field: str, index: int) -> int:
+    """Read and validate one required integer field."""
     if field not in item:
         raise ValueError(f"OpenPII annotation at index {index} is missing field {field!r}")
     value = item[field]

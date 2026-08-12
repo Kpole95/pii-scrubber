@@ -94,6 +94,7 @@ def main() -> None:
 
 
 def _parser() -> argparse.ArgumentParser:
+    """Build the command-line argument parser."""
     parser = argparse.ArgumentParser(description="Train the encoder PII detector.")
     parser.add_argument("--config", type=Path, default=Path("configs/encoder.yaml"))
     parser.add_argument(

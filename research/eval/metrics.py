@@ -170,6 +170,7 @@ def expected_calibration_error(
 
 
 def _fully_covered(target: CharacterSpan, predicted: Sequence[CharacterSpan]) -> bool:
+    """Return whether predictions cover every character in a gold span."""
     covered: set[int] = set()
     for span in predicted:
         covered.update(range(max(target.start, span.start), min(target.end, span.end)))
@@ -177,20 +178,24 @@ def _fully_covered(target: CharacterSpan, predicted: Sequence[CharacterSpan]) ->
 
 
 def _overlap_length(left: CharacterSpan, right: CharacterSpan) -> int:
+    """Return the character overlap between two spans."""
     return max(0, min(left.end, right.end) - max(left.start, right.start))
 
 
 def _covered_characters(spans: Sequence[CharacterSpan]) -> set[int]:
+    """Return the character positions covered by spans."""
     return {position for span in spans for position in range(span.start, span.end)}
 
 
 def _validate_spans(spans: Sequence[CharacterSpan], name: str) -> None:
+    """Validate span ordering and entity labels."""
     for index, span in enumerate(spans):
         if not isinstance(span, CharacterSpan):
             raise TypeError(f"{name} span at index {index} must be a CharacterSpan")
 
 
 def _validate_bounds(spans: Sequence[CharacterSpan], text_length: int, name: str) -> None:
+    """Validate that spans stay within the source text."""
     _validate_spans(spans, name)
     for index, span in enumerate(spans):
         if span.end > text_length:
@@ -198,6 +203,7 @@ def _validate_bounds(spans: Sequence[CharacterSpan], text_length: int, name: str
 
 
 def _prf(true_positives: int, false_positives: int, false_negatives: int) -> PrecisionRecallF1:
+    """Calculate precision, recall, and F1 from metric counts."""
     precision = (
         true_positives / (true_positives + false_positives)
         if true_positives + false_positives

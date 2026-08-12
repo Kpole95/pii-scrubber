@@ -77,6 +77,7 @@ def test_wrapper_merges_predictor_output() -> None:
         text: str,
         entities: set[str] | None = None,
     ) -> list[DetectedSpan]:
+        """Return deterministic predictions for the ablation test."""
         return [
             DetectedSpan(0, 5, "PERSON", 0.9),
             DetectedSpan(6, 11, "PERSON", 0.8),

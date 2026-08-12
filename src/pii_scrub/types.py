@@ -27,6 +27,7 @@ class CharacterSpan:
     entity_type: str
 
     def __post_init__(self) -> None:
+        """Validate span offsets and the entity label."""
         for name, value in (("start", self.start), ("end", self.end)):
             if isinstance(value, bool) or not isinstance(value, int):
                 raise TypeError(f"span {name} must be an integer")
@@ -62,6 +63,7 @@ class DetectedSpan(CharacterSpan):
     score: float | None = None
 
     def __post_init__(self) -> None:
+        """Validate the detected span and optional confidence score."""
         super(DetectedSpan, self).__post_init__()
         if self.score is None:
             return
@@ -81,6 +83,7 @@ class WordOffset:
     end: int
 
     def __post_init__(self) -> None:
+        """Validate one word and its source offsets."""
         if not isinstance(self.word, str):
             raise TypeError("word must be a string")
         if not self.word:
@@ -119,6 +122,7 @@ class AlignedExample:
     token_labels: tuple[TokenLabel, ...]
 
     def __post_init__(self) -> None:
+        """Validate aligned tokens, labels, and source offsets."""
         fields = (
             self.input_ids,
             self.attention_mask,
@@ -162,6 +166,7 @@ class AlignedExample:
 
 
 def _is_offset(value: object) -> bool:
+    """Return whether a value is a valid character-offset pair."""
     return (
         isinstance(value, tuple)
         and len(value) == 2
@@ -178,6 +183,7 @@ class WindowSpan:
     score: float | None = None
 
     def __post_init__(self) -> None:
+        """Validate one window-relative prediction."""
         if isinstance(self.window_index, bool) or not isinstance(self.window_index, int):
             raise TypeError("window_index must be an integer")
         if self.window_index < 0:

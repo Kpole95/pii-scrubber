@@ -20,6 +20,7 @@ class DatasetSplit:
     test: tuple[DatasetExample, ...]
 
     def __post_init__(self) -> None:
+        """Validate split containers and keep example IDs disjoint."""
         for field_name, examples in (
             ("train", self.train),
             ("validation", self.validation),

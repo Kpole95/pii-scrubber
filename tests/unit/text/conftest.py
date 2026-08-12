@@ -15,12 +15,15 @@ class FakeEncoding:
     _tokens: list[str]
 
     def __getitem__(self, key: str) -> list[Any]:
+        """Return one stored item by index or key."""
         return self.data[key]
 
     def word_ids(self) -> list[int | None]:
+        """Return tokenizer word identifiers for this encoding."""
         return self._word_ids
 
     def tokens(self) -> list[str]:
+        """Return token strings for this encoding."""
         return self._tokens
 
 
@@ -30,9 +33,11 @@ class FakeFastTokenizer:
     unk_token: str | None = "[UNK]"
 
     def __init__(self, vocabulary: dict[str, int]) -> None:
+        """Initialize the object with its configured dependencies."""
         self.vocabulary = vocabulary
 
     def __call__(self, words: list[str], **_: Any) -> FakeEncoding:
+        """Run the callable interface for this object."""
         tokens = ["[CLS]"]
         word_ids: list[int | None] = [None]
         offsets = [(0, 0)]
@@ -60,6 +65,7 @@ class FakeFastTokenizer:
         )
 
     def _split(self, word: str) -> list[str]:
+        """Split text into the toy tokenizer word pieces."""
         if word in self.vocabulary:
             return [word]
         pieces: list[str] = []
@@ -81,6 +87,7 @@ class FakeFastTokenizer:
 
 
 def _build_tokenizer(vocabulary: dict[str, int]) -> FakeFastTokenizer:
+    """Build the shared tokenizer fixture for text tests."""
     return FakeFastTokenizer(vocabulary)
 
 
@@ -107,6 +114,7 @@ def toy_tokenizer() -> FakeFastTokenizer:
 
 @pytest.fixture
 def unicode_toy_tokenizer() -> FakeFastTokenizer:
+    """Provide a tokenizer fixture with Unicode coverage."""
     return _build_tokenizer(
         {
             "[UNK]": 0,
@@ -124,6 +132,7 @@ def unicode_toy_tokenizer() -> FakeFastTokenizer:
 
 @pytest.fixture
 def limited_toy_tokenizer() -> FakeFastTokenizer:
+    """Provide a tokenizer fixture with a small token limit."""
     return _build_tokenizer(
         {
             "[UNK]": 0,

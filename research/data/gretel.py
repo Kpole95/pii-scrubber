@@ -37,6 +37,7 @@ def load_gretel_finance_record(record: Mapping[str, Any]) -> DatasetExample:
 
 
 def _decode_spans(record: Mapping[str, Any]) -> Sequence[object]:
+    """Decode the source span payload into Python data."""
     if "pii_spans" not in record:
         raise ValueError("Gretel record is missing required field 'pii_spans'")
     raw = record["pii_spans"]
@@ -53,6 +54,7 @@ def _decode_spans(record: Mapping[str, Any]) -> Sequence[object]:
 
 
 def _parse_annotation(item: object, index: int, text: str) -> CharacterSpan:
+    """Parse one source annotation into a normalized span."""
     if not isinstance(item, Mapping):
         raise TypeError(f"Gretel annotation at index {index} must be a mapping")
     start = _required_int(item, "start", index)
@@ -71,6 +73,7 @@ def _parse_annotation(item: object, index: int, text: str) -> CharacterSpan:
 
 
 def _required_text(record: Mapping[str, Any], field: str) -> str:
+    """Read and validate one required text field."""
     if field not in record:
         raise ValueError(f"Gretel record is missing required field {field!r}")
     value = record[field]
@@ -82,6 +85,7 @@ def _required_text(record: Mapping[str, Any], field: str) -> str:
 
 
 def _required_identifier(record: Mapping[str, Any], field: str) -> str:
+    """Read and validate one required record identifier."""
     if field not in record:
         raise ValueError(f"Gretel record is missing required field {field!r}")
     value = record[field]
@@ -94,6 +98,7 @@ def _required_identifier(record: Mapping[str, Any], field: str) -> str:
 
 
 def _required_annotation_text(item: Mapping[str, Any], field: str, index: int) -> str:
+    """Read and validate one annotation text value."""
     value = item[field]
     if not isinstance(value, str):
         raise TypeError(f"Gretel annotation field {field!r} at index {index} must be a string")
@@ -103,6 +108,7 @@ def _required_annotation_text(item: Mapping[str, Any], field: str, index: int) -
 
 
 def _required_int(item: Mapping[str, Any], field: str, index: int) -> int:
+    """Read and validate one required integer field."""
     if field not in item:
         raise ValueError(f"Gretel annotation at index {index} is missing field {field!r}")
     value = item[field]

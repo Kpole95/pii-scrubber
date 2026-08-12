@@ -16,6 +16,7 @@ class RegexDetector:
     """Detect structured PII using named, independently testable patterns."""
 
     def __init__(self, patterns: Mapping[str, re.Pattern[str]] = DEFAULT_PATTERNS) -> None:
+        """Copy the configured patterns for local matching."""
         self._patterns = dict(patterns)
 
     def detect(self, text: str, *, entities: set[str] | None = None) -> list[DetectedSpan]:

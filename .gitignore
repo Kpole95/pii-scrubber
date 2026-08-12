@@ -16,5 +16,4 @@ dist/
 .DS_Store
 Thumbs.db
 research/results/*
-!research/results/README.md
 research/data_artifacts/

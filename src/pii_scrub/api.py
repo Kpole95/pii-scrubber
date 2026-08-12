@@ -6,11 +6,7 @@ from pii_scrub.calibration import apply_thresholds
 from pii_scrub.config import ScrubberConfig
 from pii_scrub.detectors.base import Detector
 from pii_scrub.detectors.regex import RegexDetector
-from pii_scrub.text.replacement import (
-    RestoreEntry,
-    replace_spans,
-    restore_text,
-)
+from pii_scrub.text.replacement import RestoreEntry, replace_spans, restore_text
 from pii_scrub.threshold_profiles import load_threshold_profile
 
 
@@ -30,6 +26,8 @@ class Scrubber:
         detector: Detector | None = None,
         config: ScrubberConfig | None = None,
     ) -> None:
+        """Initialize the scrubber with an optional detector and configuration."""
+
         self._detector = detector or RegexDetector()
         self._config = config or ScrubberConfig()
 
@@ -41,41 +39,17 @@ class Scrubber:
     ) -> ScrubResult:
         """Redact requested entities and return a reversible result."""
 
-        spans = self._detector.detect(
-            text,
-            entities=entities,
-        )
-
-        thresholds = self._config.thresholds
-
-        if not thresholds:
-            thresholds = load_threshold_profile(
-                self._config.recall_mode,
-            )
-
-        filtered = apply_thresholds(
-            spans,
-            thresholds,
-        )
-
-        result = replace_spans(
-            text,
-            filtered,
-        )
-
-        return ScrubResult(
-            result.text,
-            result.mapping,
-        )
+        spans = self._detector.detect(text, entities=entities)
+        thresholds = self._config.thresholds or load_threshold_profile(self._config.recall_mode)
+        filtered = apply_thresholds(spans, thresholds)
+        result = replace_spans(text, filtered)
+        return ScrubResult(result.text, result.mapping)
 
     @staticmethod
     def restore(
         text: str,
         mapping: tuple[RestoreEntry, ...],
     ) -> str:
-        """Restore text using the mapping returned by :meth:`scrub`."""
+        """Restore text using a mapping returned by :meth:`scrub`."""
 
-        return restore_text(
-            text,
-            mapping,
-        )
+        return restore_text(text, mapping)

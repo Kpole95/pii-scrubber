@@ -17,6 +17,7 @@ def _example(
     text: str,
     spans: tuple[CharacterSpan, ...],
 ) -> DatasetExample:
+    """Build a compact dataset example for this test module."""
     return DatasetExample(
         example_id="example-1",
         text=text,

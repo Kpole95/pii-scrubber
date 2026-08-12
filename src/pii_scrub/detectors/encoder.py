@@ -15,6 +15,7 @@ class EncoderDetector:
     """
 
     def __init__(self, predictor: Predictor) -> None:
+        """Store the injected encoder prediction function."""
         if not callable(predictor):
             raise TypeError("predictor must be callable")
         self._predictor = predictor

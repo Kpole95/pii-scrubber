@@ -62,6 +62,7 @@ def wrap_merge_ablation(
         text: str,
         entities: set[str] | None = None,
     ) -> list[DetectedSpan]:
+        """Return deterministic predictions for this call."""
         return merge_separated_same_type(
             text,
             predictor(text, entities),

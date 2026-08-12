@@ -1,5 +1,7 @@
 """Tests for Hugging Face dataset acquisition."""
 
+import sys
+from types import SimpleNamespace
 from typing import Any
 
 import pytest
@@ -24,6 +26,7 @@ def test_loads_records(
         *,
         split: str,
     ) -> list[dict[str, Any]]:
+        """Return deterministic dataset rows without network access."""
         assert dataset_id == "owner/data"
         assert config is None
         assert split == "test"
@@ -35,9 +38,10 @@ def test_loads_records(
             }
         ]
 
-    monkeypatch.setattr(
-        "datasets.load_dataset",
-        fake_load_dataset,
+    monkeypatch.setitem(
+        sys.modules,
+        "datasets",
+        SimpleNamespace(load_dataset=fake_load_dataset),
     )
 
     records = load_huggingface_records(
@@ -64,12 +68,14 @@ def test_passes_config(
         *,
         split: str,
     ) -> list[dict[str, Any]]:
+        """Return deterministic dataset rows without network access."""
         assert config == "english"
         return []
 
-    monkeypatch.setattr(
-        "datasets.load_dataset",
-        fake_load_dataset,
+    monkeypatch.setitem(
+        sys.modules,
+        "datasets",
+        SimpleNamespace(load_dataset=fake_load_dataset),
     )
 
     records = load_huggingface_records(

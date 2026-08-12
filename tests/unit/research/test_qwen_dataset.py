@@ -18,6 +18,7 @@ class FakeTokenizer:
         tokenize: bool,
         add_generation_prompt: bool,
     ) -> str:
+        """Render chat messages with the tokenizer chat template."""
         assert tokenize is False
 
         text = ""
@@ -37,6 +38,7 @@ class FakeTokenizer:
         add_special_tokens: bool,
         return_offsets_mapping: bool,
     ):
+        """Run the callable interface for this object."""
         assert add_special_tokens is False
         assert return_offsets_mapping is True
 
@@ -51,6 +53,7 @@ def _example(
     example_id: str,
     text: str,
 ) -> DatasetExample:
+    """Build a compact dataset example for this test module."""
     return DatasetExample(
         example_id=example_id,
         text=text,

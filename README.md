@@ -1,35 +1,29 @@
 # PII Scrubber
 
-PII Scrubber is a local-first Python library and CLI that detects and replaces personal data before text is sent to another system. The repository also contains the research pipeline used to compare rule-based detection, Presidio, an encoder classifier, and a generative small language model at span level.
+PII Scrubber is a local Python library and CLI for finding and replacing personal data before text is sent somewhere else. The repository also contains the research code used to compare rules, Microsoft Presidio, a DeBERTa encoder, and a Qwen LoRA model with the same span-level metrics.
 
-## Current status
+The main research result is simple: **the DeBERTa encoder is the strongest model in this study**. It gives much lower leak rate and much better exact span accuracy than the Qwen model on the frozen test sets.
 
-The repository currently contains the completed **Milestone 1 foundation through Stage 12**:
+## What it does
 
-- strict BIO and subword alignment with document-global offsets;
-- exact character-span reconstruction and overlapping-window merging;
-- normalized Ai4Privacy and CoNLL-2003 benchmark adapters;
-- deterministic splits, JSONL artifacts, manifests, and statistics;
-- a fixed 200-example hand-labeled OOD benchmark;
-- reversible replacement plus regex, Presidio, and encoder detector support;
-- leak rate, exact/partial span F1, per-entity recall, over-redaction, and calibration metrics;
-- trained DeBERTa-v3-base encoder evaluation across Ai4Privacy, OOD, and CoNLL;
-- trained Qwen2.5-1.5B LoRA evaluation with strict JSON span parsing;
-- validation-only encoder calibration with frozen `balanced` and `strict` threshold profiles;
-- runtime `recall_mode` support for the frozen profiles;
-- 464 offline tests.
+- detects PII with local detectors;
+- replaces detected spans with typed placeholders;
+- keeps a restoration map so text can be restored by the caller;
+- preserves document-level character offsets through tokenization and windows;
+- supports regex, Presidio, encoder, and generative detector adapters;
+- evaluates leak rate, exact span F1, partial span F1, per-entity recall, and over-redaction;
+- includes a 200-example hand-labeled OOD benchmark;
+- includes calibration, threshold-profile, robustness, and memorization audits.
 
-The encoder is the selected primary model family. It has substantially lower leak rate and higher exact-span F1 than the Qwen model across all three frozen benchmarks. Qwen shows useful semantic recognition through partial-span scores, but exact offsets and structured-output reliability are not strong enough for the scrubber's primary detection path.
+The base runtime has no required ML dependency. `Scrubber()` uses the regex detector by default, which currently handles email addresses, phone numbers, and IPv4 addresses. Broader detection is provided through optional detectors or an injected model predictor.
 
-Threshold profiles were selected only on the Ai4Privacy validation split. Final Ai4Privacy test, OOD, and CoNLL measurements are reported without test-set retuning. The raw encoder currently has the lowest observed leak rate on all three final benchmarks, while the frozen profiles remain available as explicit runtime policy choices.
-
-## Install
+## Install from source
 
 ```bash
 python -m pip install .
 ```
 
-Optional dependency groups:
+Optional groups:
 
 ```bash
 python -m pip install ".[presidio]"
@@ -37,7 +31,11 @@ python -m pip install ".[ml]"
 python -m pip install ".[research,dev]"
 ```
 
-## Library usage
+A public model-download path and final wheel smoke test are part of the Stage 14 release work. Model weights are intentionally not stored in normal Git history.
+
+## Quick start
+
+### Python
 
 ```python
 from pii_scrub import Scrubber
@@ -48,73 +46,89 @@ result = Scrubber().scrub(text)
 print(result.text)
 # Email [EMAIL_1] or call [PHONE_1].
 
-assert Scrubber.restore(result.text, result.mapping) == text
+original = Scrubber.restore(result.text, result.mapping)
+assert original == text
 ```
 
-The default detector is the regex baseline. The trained encoder and Presidio integrations provide broader detection for names and contextual entities.
-
-## CLI usage
+### CLI
 
 ```bash
 pii-scrub "Email ana@example.com"
 # Email [EMAIL_1]
 
-pii-scrub --file transcript.txt --entities EMAIL,PHONE --mapping-out mapping.json
+pii-scrub \
+  --file transcript.txt \
+  --entities EMAIL,PHONE \
+  --mapping-out mapping.json
 ```
 
-## Canonical structure
+## How the project is organized
 
 ```text
-pii-scrubber/
-├── configs/                    reproducible model and decision configs
-├── src/pii_scrub/              installable runtime package
-│   ├── api.py                  public Scrubber orchestration
-│   ├── calibration.py          runtime threshold filtering
-│   ├── config.py               immutable runtime configuration
-│   ├── detectors/              regex, Presidio, encoder, generative adapters
-│   ├── text/                   alignment, spans, windows, replacement
-│   └── types.py                shared immutable domain models
-├── research/                   never imported by the runtime package
-│   ├── data/                   dataset normalization, splits, artifacts
-│   ├── eval/                   span-level metrics
-│   ├── train/                  encoder and Qwen training pipelines
-│   ├── labeled_ood/            hand-labeled real-text test set
-│   └── results/                reproducible generated evaluation reports
-├── scripts/                    repository and experiment entry points
-├── tests/
-│   ├── unit/
-│   ├── contract/
-│   └── integration/
-└── docs/
+configs/            training and threshold settings
+src/pii_scrub/      installable runtime package
+research/data/      dataset normalization and artifacts
+research/eval/      metrics, calibration, and model evaluation
+research/train/     DeBERTa and Qwen training code
+research/labeled_ood/  200 reviewed OOD examples
+scripts/            experiment and repository commands
+tests/              unit, contract, and integration tests
 ```
 
-The dependency rule is one-way:
+The runtime package never imports `research`. Research code may use the runtime package, but not the other way around.
 
-```text
-research -> pii_scrub
-pii_scrub -X-> research
-```
+## Main results
 
-## Quality commands
+The raw DeBERTa encoder is the reference model because it had the lowest final leak rate on all three frozen benchmarks.
+
+| Dataset | Exact F1 | Partial F1 | Leak rate | Over-redaction |
+|---|---:|---:|---:|---:|
+| Ai4Privacy test | 0.9542 | 0.9677 | 0.0339 | 0.0007 |
+| OOD 200 | 0.4356 | 0.6687 | 0.4873 | 0.0050 |
+| CoNLL PERSON | 0.1689 | 0.6473 | 0.7897 | 0.0050 |
+
+The Qwen2.5-1.5B LoRA model was much weaker on exact spans and leak rate. Its partial-span scores show that it often recognizes the right area, but exact offsets and structured output are not reliable enough for the main redaction path.
+
+See [RESULTS.md](RESULTS.md) for the model comparison, calibration, frozen thresholds, robustness checks, and memorization audit.
+
+## Robustness findings
+
+Stage 13 found one important weakness: **case changes can hurt the encoder**.
+
+- lowercasing the Ai4Privacy robustness subset increased leak rate by 27.33 percentage points;
+- uppercasing increased it by 11.34 points;
+- double spaces and non-breaking spaces caused essentially no leak change;
+- 480-word and 560-word prefix stress did not increase OOD leak rate;
+- no exact or normalized full-text train duplicates were found in validation, test, or OOD data.
+
+These results were measured without retraining or retuning thresholds on final test sets.
+
+## Known limitations
+
+- Redaction is **not anonymization**. Remaining context can still identify someone.
+- Recall is not 100%. Treat the tool as risk reduction, not a privacy guarantee.
+- OOD and CoNLL performance is much weaker than in-domain Ai4Privacy performance.
+- The encoder is sensitive to casing, especially fully lowercased text.
+- The training corpus is more templated than real-world text.
+- Scanned PDFs, OCR, DOCX parsing, streaming, a web UI, and cloud fallback are outside Phase 1.
+- The default regex detector covers only a small structured subset of the full research taxonomy.
+
+## Development checks
 
 ```bash
 python -m pytest
 python scripts/check_structure.py
 ruff format --check .
 ruff check .
-mypy
+mypy src scripts research
 ```
 
-Tests use a deterministic tokenizer fake. They do not download a model or require network access.
+The structure check keeps project Python modules at 300 lines or less, checks required docstrings, and prevents runtime imports from the research package.
 
-## Non-goals
+## Project status
 
-This project does not include a web UI, hosted service, cloud-model fallback, streaming pipeline, PDF/DOCX parsing, custom annotation application, or quasi-identifier anonymization.
+Stages 1 through 13 are complete. Stage 14 is the final packaging and public-release pass: clean installation, model distribution, final security/history checks, build artifacts, license choice, and the `v0.1.0` release.
 
-## Safety limitation
+## License
 
-Redaction is not anonymization. Context that remains after direct identifiers are removed may still identify a person. Recall is also never guaranteed to be 100%; report measured leak rate instead of claiming complete protection.
-
-## Public-release blocker
-
-A project license has not been selected. Do not publish the repository as reusable open source until an appropriate `LICENSE` file is deliberately chosen.
+A license has not been selected yet. Stage 14 must add the chosen `LICENSE` before the repository is presented as reusable open source.

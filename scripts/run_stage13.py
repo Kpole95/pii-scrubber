@@ -152,6 +152,7 @@ def _duplicate_stats(
     target: Sequence[DatasetExample],
     key: Callable[[DatasetExample], str],
 ) -> Report:
+    """Summarize exact or normalized train-to-target duplicates."""
     reference = {key(example) for example in train}
     matches = [example.example_id for example in target if key(example) in reference]
     return {
@@ -166,6 +167,7 @@ def _pii_value_overlap(
     train: Sequence[DatasetExample],
     targets: dict[str, Sequence[DatasetExample]],
 ) -> Report:
+    """Measure target PII values that also appear in training."""
     known: dict[str, set[str]] = defaultdict(set)
     for example in train:
         for span in example.spans:
@@ -196,6 +198,7 @@ def _predict_cache(
     examples: Sequence[DatasetExample],
     label: str,
 ) -> dict[str, list[DetectedSpan]]:
+    """Run predictions once and cache them by example text."""
     cache: dict[str, list[DetectedSpan]] = {}
     for index, example in enumerate(examples, 1):
         cache[example.text] = predictor(example.text, None)
@@ -205,7 +208,10 @@ def _predict_cache(
 
 
 def _cached_detector(cache: dict[str, list[DetectedSpan]]) -> EncoderDetector:
+    """Build a detector that replays cached predictions."""
+
     def predict(text: str, entities: set[str] | None) -> list[DetectedSpan]:
+        """Return deterministic predictions for this call."""
         spans = cache[text]
         if entities is None:
             return list(spans)
@@ -215,6 +221,7 @@ def _cached_detector(cache: dict[str, list[DetectedSpan]]) -> EncoderDetector:
 
 
 def _metrics(report: Report) -> dict[str, float]:
+    """Extract the Stage 13 metrics used for comparison."""
     exact = cast(dict[str, object], report["exact"])
     partial = cast(dict[str, object], report["partial"])
     return {
@@ -226,10 +233,12 @@ def _metrics(report: Report) -> dict[str, float]:
 
 
 def _delta(after: dict[str, float], before: dict[str, float]) -> dict[str, float]:
+    """Calculate metric deltas from a baseline result."""
     return {name: after[name] - before[name] for name in before}
 
 
 def _prefix_context(example: DatasetExample, words: int) -> DatasetExample:
+    """Add deterministic prefix text and shift gold offsets."""
     prefix = "context " * words
     offset = len(prefix)
     spans = tuple(
@@ -246,6 +255,7 @@ def _prefix_context(example: DatasetExample, words: int) -> DatasetExample:
 
 
 def _perturbations() -> dict[str, CharTransform]:
+    """Return the deterministic Stage 13 text perturbations."""
     return {
         "lowercase": str.lower,
         "uppercase": str.upper,
@@ -257,10 +267,12 @@ def _perturbations() -> dict[str, CharTransform]:
 
 
 def _normalize(text: str) -> str:
+    """Normalize text for conservative duplicate matching."""
     return " ".join(text.casefold().split())
 
 
 def _parser() -> ArgumentParser:
+    """Build the command-line argument parser."""
     parser = ArgumentParser(description="Run Stage 13 robustness and memorization audits.")
     parser.add_argument("--model-path", type=Path, default=Path("research/results/encoder"))
     parser.add_argument("--artifact", type=Path, default=Path("research/data_artifacts/ai4privacy"))

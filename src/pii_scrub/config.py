@@ -13,6 +13,7 @@ class ScrubberConfig:
     thresholds: dict[str, float] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
+        """Validate the recall mode and any custom thresholds."""
         if self.recall_mode not in {"balanced", "strict"}:
             raise ConfigurationError("recall_mode must be 'balanced' or 'strict'")
         for entity, threshold in self.thresholds.items():

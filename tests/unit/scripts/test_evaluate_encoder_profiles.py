@@ -2,69 +2,43 @@
 
 from pii_scrub.types import CharacterSpan, DetectedSpan
 from research.data.models import DatasetExample
-from scripts.evaluate_encoder_profiles import _evaluate_cached
+from research.eval.encoder_profiles import evaluate_cached
 
 
 def _example() -> DatasetExample:
+    """Build the shared PERSON example for cached evaluation tests."""
+
     return DatasetExample(
         example_id="one",
         text="John public",
-        spans=(
-            CharacterSpan(
-                0,
-                4,
-                "PERSON",
-            ),
-        ),
+        spans=(CharacterSpan(0, 4, "PERSON"),),
         source="test",
         language="en",
     )
 
 
 def test_raw_cache_keeps_prediction() -> None:
+    """Raw cached evaluation should keep the stored prediction."""
+
     examples = (_example(),)
+    predictions = ((DetectedSpan(0, 4, "PERSON", 0.40),),)
 
-    predictions = (
-        (
-            DetectedSpan(
-                0,
-                4,
-                "PERSON",
-                0.40,
-            ),
-        ),
-    )
-
-    report = _evaluate_cached(
-        examples,
-        predictions,
-        entities=None,
-    )
+    report = evaluate_cached(examples, predictions, entities=None)
 
     assert report["exact"]["f1"] == 1.0
     assert report["leak_rate"] == 0.0
 
 
 def test_thresholded_cache_can_remove_prediction() -> None:
+    """A frozen threshold should be able to remove a cached prediction."""
+
     examples = (_example(),)
+    predictions = ((DetectedSpan(0, 4, "PERSON", 0.40),),)
 
-    predictions = (
-        (
-            DetectedSpan(
-                0,
-                4,
-                "PERSON",
-                0.40,
-            ),
-        ),
-    )
-
-    report = _evaluate_cached(
+    report = evaluate_cached(
         examples,
         predictions,
-        thresholds={
-            "PERSON": 0.50,
-        },
+        thresholds={"PERSON": 0.50},
         entities=None,
     )
 
@@ -73,30 +47,17 @@ def test_thresholded_cache_can_remove_prediction() -> None:
 
 
 def test_entity_filter_is_preserved() -> None:
-    examples = (_example(),)
+    """Cached evaluation should keep the requested entity filter."""
 
+    examples = (_example(),)
     predictions = (
         (
-            DetectedSpan(
-                0,
-                4,
-                "PERSON",
-                0.90,
-            ),
-            DetectedSpan(
-                5,
-                11,
-                "EMAIL",
-                0.90,
-            ),
+            DetectedSpan(0, 4, "PERSON", 0.90),
+            DetectedSpan(5, 11, "EMAIL", 0.90),
         ),
     )
 
-    report = _evaluate_cached(
-        examples,
-        predictions,
-        entities={"PERSON"},
-    )
+    report = evaluate_cached(examples, predictions, entities={"PERSON"})
 
     assert report["exact"]["precision"] == 1.0
     assert report["exact"]["recall"] == 1.0

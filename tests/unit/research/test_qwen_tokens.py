@@ -16,6 +16,7 @@ class FakeChatTokenizer:
         tokenize: bool,
         add_generation_prompt: bool,
     ) -> str:
+        """Render chat messages with the tokenizer chat template."""
         assert tokenize is False
 
         result = ""
@@ -35,6 +36,7 @@ class FakeChatTokenizer:
         add_special_tokens: bool,
         return_offsets_mapping: bool,
     ):
+        """Run the callable interface for this object."""
         assert add_special_tokens is False
         assert return_offsets_mapping is True
 
@@ -46,6 +48,7 @@ class FakeChatTokenizer:
 
 
 def _messages() -> tuple[QwenMessage, ...]:
+    """Build the chat messages used by tokenizer tests."""
     return (
         QwenMessage(role="system", content="system"),
         QwenMessage(role="user", content="John"),
@@ -174,6 +177,8 @@ def test_rejects_template_text_prefix_mismatch() -> None:
     """Unexpected chat-template rendering should fail loudly."""
 
     class BrokenTokenizer(FakeChatTokenizer):
+        """Provide a tokenizer stub that intentionally breaks the expected contract."""
+
         def apply_chat_template(
             self,
             conversation,
@@ -181,6 +186,7 @@ def test_rejects_template_text_prefix_mismatch() -> None:
             tokenize: bool,
             add_generation_prompt: bool,
         ) -> str:
+            """Render chat messages with the tokenizer chat template."""
             result = super().apply_chat_template(
                 conversation,
                 tokenize=tokenize,
