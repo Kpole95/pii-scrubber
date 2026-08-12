@@ -1,0 +1,42 @@
+{
+  "balanced": {
+    "ADDRESS": 0.55,
+    "BANK_ACCOUNT": 0.8,
+    "COMPANY": 0.9,
+    "CREDIT_CARD": 0.75,
+    "DATE": 0.8,
+    "EMAIL": 0.95,
+    "ID_NUMBER": 0.6,
+    "IP_ADDRESS": 0.95,
+    "LOCATION": 0.95,
+    "PASSWORD": 0.9,
+    "PERSON": 0.6,
+    "PHONE": 0.95,
+    "POSTAL_CODE": 0.5,
+    "SECRET": 0.6,
+    "SOCIAL_SECURITY_NUMBER": 0.65,
+    "SWIFT_CODE": 0.85,
+    "TITLE": 0.9,
+    "USERNAME": 0.6
+  },
+  "strict": {
+    "ADDRESS": 0.4,
+    "BANK_ACCOUNT": 0.4,
+    "COMPANY": 0.55,
+    "CREDIT_CARD": 0.5,
+    "DATE": 0.6,
+    "EMAIL": 0.95,
+    "ID_NUMBER": 0.5,
+    "IP_ADDRESS": 0.9,
+    "LOCATION": 0.95,
+    "PASSWORD": 0.9,
+    "PERSON": 0.5,
+    "PHONE": 0.35,
+    "POSTAL_CODE": 0.4,
+    "SECRET": 0.45,
+    "SOCIAL_SECURITY_NUMBER": 0.4,
+    "SWIFT_CODE": 0.7,
+    "TITLE": 0.75,
+    "USERNAME": 0.6
+  }
+}

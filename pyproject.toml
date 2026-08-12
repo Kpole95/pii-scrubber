@@ -33,7 +33,7 @@ pii-scrub = "pii_scrub.cli:main"
 where = ["src"]
 
 [tool.setuptools.package-data]
-pii_scrub = ["py.typed"]
+pii_scrub = ["py.typed", "configs/*.json"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -62,4 +62,3 @@ ignore_missing_imports = true
 [[tool.mypy.overrides]]
 module = ["datasets", "datasets.*"]
 ignore_missing_imports = true
-

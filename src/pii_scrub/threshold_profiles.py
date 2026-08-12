@@ -4,7 +4,7 @@ import json
 from collections.abc import Mapping
 from pathlib import Path
 
-DEFAULT_THRESHOLDS_PATH = Path(__file__).resolve().parents[2] / "configs" / "thresholds.yaml"
+DEFAULT_THRESHOLDS_PATH = Path(__file__).resolve().parent / "configs" / "thresholds.json"
 
 
 def load_threshold_profile(
