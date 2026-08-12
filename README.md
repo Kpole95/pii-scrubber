@@ -104,6 +104,7 @@ The runtime package never imports `research`. Research code may use the runtime 
 The trained encoder artifact is kept outside normal Git history. From a source checkout with the ML dependencies installed and a local copy of the trained model, the encoder can be loaded like this:
 
 ```python
+# This script lives outside src/pii_scrub; the runtime package does not import research.
 from pathlib import Path
 
 from pii_scrub import Scrubber
